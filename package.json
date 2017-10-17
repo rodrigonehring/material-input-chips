@@ -1,0 +1,39 @@
+{
+  "name": "material-chips",
+  "version": "1.0.0",
+  "description": "material-ui based chips autocomplete",
+  "main": "index.js",
+  "author": "Rodrigo Nehring",
+  "license": "MIT",
+  "scripts": {
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      ["env", {
+        "targets": {
+          "browsers": ["last 2 versions", "safari >= 7"]
+        }
+      }]
+    ],
+    "plugins": [
+      "transform-class-properties"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "react-styleguidist": "^6.0.31",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "material-ui": "^1.0.0-beta.17",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}

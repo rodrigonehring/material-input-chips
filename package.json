@@ -2,10 +2,13 @@
   "name": "material-input-chips",
   "version": "1.0.0",
   "description": "material-ui based chips autocomplete",
-  "main": "src/MaterialChips/index.js",
+  "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",
   "license": "MIT",
   "scripts": {
+    "build": "npm run clean && npm run build:dist",
+    "build:dist": "node_modules/.bin/webpack --verbose --colors --display-error-details",
+    "clean": "rm -rf dist",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },

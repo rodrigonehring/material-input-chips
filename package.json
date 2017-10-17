@@ -1,9 +1,9 @@
 {
-  "name": "material-chips",
+  "name": "material-input-chips",
   "version": "1.0.0",
   "description": "material-ui based chips autocomplete",
-  "main": "index.js",
-  "author": "Rodrigo Nehring",
+  "main": "src/MaterialChips/index.js",
+  "author": "Rodrigo Eduardo Nehring",
   "license": "MIT",
   "scripts": {
     "styleguide": "styleguidist server",

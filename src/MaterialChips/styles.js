@@ -24,14 +24,15 @@ const styles = theme => ({
   chips: {
     position: 'absolute',
     minWidth: '100%',
-    // border: '1px solid blue',
     flexWrap: 'nowrap',
     marginTop: 15,
     transition: '.3s ease',
     display: 'inline-flex'
   },
   chipFocus: {
-    // opacity: .5
+    '&$chip > svg': {
+      color: 'rgba(0, 174, 239, 0.8)'
+    }
   }, 
   chip: {
     display: 'inline-flex',
@@ -62,7 +63,6 @@ const styles = theme => ({
     }
   },
   input: {
-    // border: '1px solid rgba(0,0,0,0.2)',
     paddingTop: 2,
     fontSize: 13,
     flex: '1 0 auto'

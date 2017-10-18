@@ -31,7 +31,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "curly": 2,
     "keyword-spacing": 2,
-    "no-console": 0,
+    "no-console": "warn",
     "no-bitwise": 2,
     "max-params": [ 2, {"max": 7}],
     "no-redeclare": 2,

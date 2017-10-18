@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
 
-    filename: 'material-ui-chips.js'
+    filename: 'material-input-chips.js'
   },
   module: {
     rules: [
@@ -40,11 +40,11 @@ module.exports = {
   ],
   plugins: [
     new WebpackBundleSizeAnalyzerPlugin(path.resolve(__dirname, 'dist/plain-report.txt')),
-    prod && new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    }),
+    // prod && new webpack.optimize.UglifyJsPlugin({
+    //   minimize: true,
+    //   compress: {
+    //     warnings: false
+    //   }
+    // }),
   ]
 }

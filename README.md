@@ -5,3 +5,10 @@ A react component using material-ui@next to make a input field with autocomplete
 
 
 ## WORKING!
+
+
+
+### TODO
+* merge external styles
+* better autocomplete
+* translate some comments

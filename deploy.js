@@ -69,7 +69,7 @@ async function deploy() {
     console.log('Different versions, updating package.json');
     packageJson.version = currentTag;
     await savePackage(packageJson);
-    await commit(currentBranch, currentTag);
+    await commit(currentTag);
 
     console.log('Success!');
   }

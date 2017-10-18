@@ -3,6 +3,7 @@ install:
   - yarn
 script:
   - npm run build
+cache: yarn
 deploy:
   provider: npm
   email: rodrigonehring@hotmail.com

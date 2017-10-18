@@ -1,11 +1,12 @@
 language: node
+install:
+  - yarn
+script:
+  - npm run build
 deploy:
   provider: npm
   email: rodrigonehring@hotmail.com
   api_key: $NPM_TOKEN
+  skip_cleanup: true
   on:
     tags: true
-install:
-  - yarn
-script:
-  - npm t

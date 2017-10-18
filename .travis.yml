@@ -1,4 +1,6 @@
-language: node
+language: node_js
+node_js:
+  - "8"
 install:
   - yarn
 script:
@@ -8,6 +10,7 @@ deploy:
   provider: npm
   email: rodrigonehring@hotmail.com
   api_key: $NPM_TOKEN
+  script: 'node deploy.js'
   skip_cleanup: true
   on:
     tags: true

@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const prod = true;
-
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: './src/MaterialChips/index.js',
@@ -26,12 +24,5 @@ module.exports = {
     'react-dom': 'commonjs react-dom',
     'material-ui': 'commonjs material-ui',
   },
-  plugins: [
-    prod && new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    }),
-  ]
+  plugins: []
 }

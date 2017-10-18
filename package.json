@@ -1,13 +1,14 @@
 {
   "name": "material-input-chips",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "material-ui based chips autocomplete",
   "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && npm run build:dist",
-    "build:dist": "node_modules/.bin/webpack --verbose --colors --display-error-details",
+    "build": "npm run clean && mkdir dist && npm run build:dist",
+    "build:dist": "babel src/MaterialChips/*.js --out-file dist/material-input-chips.js",
+    "prepublish": "npm run build",
     "clean": "rm -rf dist",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
@@ -32,11 +33,14 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "react-styleguidist": "^6.0.31",
-    "webpack": "^3.8.1"
-  },
-  "dependencies": {
     "material-ui": "^1.0.0-beta.17",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "webpack": "^3.8.1"
+  },
+  "peerDependencies": {
+    "material-ui": ">= 1.0.0",
+    "react": "^15.6.1 || ^16.0.0",
+    "react-dom": "^15.6.1 || ^16.0.0"
   }
 }

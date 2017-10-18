@@ -318,7 +318,6 @@ class MaterialChips extends Component {
   }
 
   handleChipFocus = index => () => {
-    console.log('handleChipFocus')
     this.resetScroll()
     if (!this.props.chipsDisabled) {
       this.setState({

@@ -2,7 +2,7 @@ language: node
 install:
   - yarn
 script:
-  - npm run build
+  - npm t
 cache: yarn
 deploy:
   provider: npm

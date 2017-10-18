@@ -1,6 +1,6 @@
 {
   "name": "material-input-chips",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "material-ui based chips autocomplete",
   "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run clean && mkdir dist && npm run build:dist",
     "build:dist": "NODE_ENV=production webpack",
-    "prepublish": "npm run build",
+    "prepublish": "npm run build && node deploy",
     "clean": "rm -rf dist",
     "test": "eslint src",
     "start": "styleguidist server",

@@ -1,6 +1,6 @@
 {
   "name": "material-input-chips",
-  "version": "1.1.5",
+  "version": "master",
   "description": "material-ui based chips autocomplete",
   "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",

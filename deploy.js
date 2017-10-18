@@ -46,7 +46,7 @@ const savePackage = (content) => new Promise((resolve, reject) => {
 
 
 const commit = (version) => new Promise((resolve, reject) => {
-  exec(`git add . && git commit -m "Auto updating version" && git tag ${version} -f && git push && git push --tags`, (err, stdout) => {
+  exec(`git add . && git commit -m "Auto updating version" && git tag ${version} -f && git push -f && git push --tags -f`, (err, stdout) => {
     if (err) {
       return reject(err);
     }

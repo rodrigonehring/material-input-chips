@@ -31,21 +31,21 @@ const styles = theme => ({
   },
   chipFocus: {
     '&$chip > svg': {
-      color: 'rgba(0, 174, 239, 0.8)'
+      color: theme.palette.primary[500]
     }
   }, 
   chip: {
     display: 'inline-flex',
     height: 20,
     margin: theme.spacing.unit / 4,
-    '&:hover > svg': {
-      color: '#00aeef',
+    '&:hover:not($chipFocus) > svg': {
+      color: theme.palette.primary[400],
       '&:hover': {
-        color: 'rgba(0, 174, 239, 0.8)'
+        color: theme.palette.primary[500]
       }
     },
     '& > svg': {
-      color: 'rgba(0, 0, 0, 0.54)',
+      color: theme.palette.grey[700],
       width: 16
     }
   },

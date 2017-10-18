@@ -3,7 +3,7 @@ import React from 'react'
 export default class Handler extends React.Component {
   state = { selected: this.props.children.props.selected || [] }
 
-  onChange = (selected) => this.setState({ selected })
+  onChange = selected => this.setState({ selected })
 
   render() {
     return (

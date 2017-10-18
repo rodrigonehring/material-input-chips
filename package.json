@@ -7,10 +7,10 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run clean && mkdir dist && npm run build:dist",
-    "build:dist": "webpack",
+    "build:dist": "NODE_ENV=produtction webpack",
     "prepublish": "npm run build",
     "clean": "rm -rf dist",
-    "styleguide": "styleguidist server",
+    "start": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
   "babel": {
@@ -34,16 +34,20 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-react": "^7.4.0",
     "material-ui": "^1.0.0-beta.17",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-styleguidist": "^6.0.31",
-    "webpack-bundle-size-analyzer": "^2.7.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-bundle-size-analyzer": "^2.7.0"
   },
   "peerDependencies": {
     "material-ui": ">= 1.0.0",

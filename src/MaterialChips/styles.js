@@ -3,23 +3,23 @@ const styles = theme => ({
     position: 'relative',
     width: '100%',
     '&:focus': {
-      outline: 'none'
-    }
+      outline: 'none',
+    },
   },
   formControl: {
     transition: '.3s ease',
     display: 'flex',
     height: 43,
-    marginBottom: theme.spacing.unit / 2
+    marginBottom: theme.spacing.unit / 2,
   },
   inputContainer: {
     display: 'inline-flex',
-    flex: '1 0 auto'
+    flex: '1 0 auto',
   },
   chipsWrapper: {
     overflowX: 'hidden',
     position: 'relative',
-    flex: '1 0 auto'
+    flex: '1 0 auto',
   },
   chips: {
     position: 'absolute',
@@ -27,12 +27,12 @@ const styles = theme => ({
     flexWrap: 'nowrap',
     marginTop: 15,
     transition: '.3s ease',
-    display: 'inline-flex'
+    display: 'inline-flex',
   },
   chipFocus: {
     '&$chip > svg': {
-      color: theme.palette.primary[500]
-    }
+      color: theme.palette.primary[500],
+    },
   }, 
   chip: {
     display: 'inline-flex',
@@ -41,34 +41,34 @@ const styles = theme => ({
     '&:hover:not($chipFocus) > svg': {
       color: theme.palette.primary[400],
       '&:hover': {
-        color: theme.palette.primary[500]
-      }
+        color: theme.palette.primary[500],
+      },
     },
     '& > svg': {
       color: theme.palette.grey[700],
-      width: 16
-    }
+      width: 16,
+    },
   },
   error: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing.unit * 3,
   },
   errorText: {
     position: 'absolute',
-    bottom: -15
+    bottom: -15,
   },
   chipWrapper: {
     display: 'inline-flex',
     '&:last-child': {
-      marginRight: (theme.spacing.unit / 3) * 2
-    }
+      marginRight: (theme.spacing.unit / 3) * 2,
+    },
   },
   input: {
     paddingTop: 2,
     fontSize: 13,
-    flex: '1 0 auto'
+    flex: '1 0 auto',
   },
   disabled: {
-    color: theme.palette.text.disabled
+    color: theme.palette.text.disabled,
   },
   inkbar: {
     '&:after': {
@@ -83,15 +83,15 @@ const styles = theme => ({
       transform: 'scaleX(0)',
       transition: theme.transitions.create('transform', {
         duration: theme.transitions.duration.shorter,
-        easing: theme.transitions.easing.easeOut
-      })
+        easing: theme.transitions.easing.easeOut,
+      }),
     },
     '&$error:after': {
-      backgroundColor: theme.palette.error.A400
+      backgroundColor: theme.palette.error.A400,
     },
     '&$focused:after': {
-      transform: 'scaleX(1)'
-    }
+      transform: 'scaleX(1)',
+    },
   },
   focused: {},
   underline: {
@@ -106,16 +106,16 @@ const styles = theme => ({
       right: 0,
       transition: theme.transitions.create('background-color', {
         duration: theme.transitions.duration.shorter,
-        easing: theme.transitions.easing.ease
-      })
+        easing: theme.transitions.easing.ease,
+      }),
     },
     '&:hover:not($disabled):before': {
       backgroundColor: theme.palette.text.primary,
-      height: 2
+      height: 2,
     },
     '&$error:before': {
       backgroundColor: theme.palette.error.A400,
-      transform: 'scaleX(1)' // error is always underlined in red
+      transform: 'scaleX(1)', // error is always underlined in red
     },
     '&$disabled:before': {
       background: 'transparent',
@@ -123,9 +123,9 @@ const styles = theme => ({
         .bottomLine} 33%, transparent 0%)`,
       backgroundPosition: 'left top',
       backgroundRepeat: 'repeat-x',
-      backgroundSize: '5px 1px'
-    }
-  }
-});
+      backgroundSize: '5px 1px',
+    },
+  },
+})
 
-export default styles;
+export default styles

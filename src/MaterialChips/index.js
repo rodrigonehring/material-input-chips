@@ -82,7 +82,7 @@ class MaterialChips extends Component {
     chipFocus: null,
     optionsOpen: false,
     translateX: 0,
-    input: ''
+    input: '',
   }
 
   chipRefs = {}
@@ -117,7 +117,7 @@ class MaterialChips extends Component {
         inputFocus: false,
         optionsFocus: false,
         chipFocus: null,
-        optionsOpen: false
+        optionsOpen: false,
       })
     })
   }
@@ -128,7 +128,7 @@ class MaterialChips extends Component {
       this.setState({
         error: null,
         input: target.value,
-        optionsOpen: true
+        optionsOpen: true,
       })
 
       if (this.props.onSearch) {
@@ -140,7 +140,7 @@ class MaterialChips extends Component {
 
     this.setState({
       error: null,
-      input: target.value
+      input: target.value,
     })
   }
 
@@ -156,7 +156,7 @@ class MaterialChips extends Component {
     // se options está aberto e aberta 'ESC', fechar
     if (optionsOpen && TYPES.ESCAPE.includes(e.keyCode)) {
       return this.setState({
-        optionsOpen: false
+        optionsOpen: false,
       })
     }
 
@@ -177,7 +177,7 @@ class MaterialChips extends Component {
         return this.setState({
           chipFocus: null,
           inputFocus: false,
-          containerFocus: false
+          containerFocus: false,
         })
       }
 
@@ -235,7 +235,7 @@ class MaterialChips extends Component {
     
     const contact = makeContact({
       [value]: newValue,
-      [label]: newValue
+      [label]: newValue,
     })
 
     return contact
@@ -257,7 +257,7 @@ class MaterialChips extends Component {
     this.setState(
       state => ({
         error,
-        input: this.props.clearAfterAdd ? '' : state.input
+        input: this.props.clearAfterAdd ? '' : state.input,
       }),
       () => {
         this.onChange([ ...selected, item ])
@@ -270,9 +270,7 @@ class MaterialChips extends Component {
     const { selected, fields } = this.props
 
     this.setState(
-      {
-        chipFocus: null
-      },
+      {chipFocus: null },
       () => {
         this.onChange(selected.filter(item => item[fields.value] !== chip[fields.value]))
         this.calculatePosition()
@@ -288,7 +286,7 @@ class MaterialChips extends Component {
     if (!this.props.disabled) {
       this.setState(state => ({
         optionsOpen: state.optionsOpen || this.props.openOnFocus,
-        containerFocus: true
+        containerFocus: true,
       }), () => this.calculatePosition())
     }
   }
@@ -309,7 +307,7 @@ class MaterialChips extends Component {
   handleContainerBlur = () => {
     this.setState({
       chipFocus: null,
-      containerFocus: false
+      containerFocus: false,
     }, () => this.calculatePosition())
   }
 
@@ -317,7 +315,7 @@ class MaterialChips extends Component {
     this.resetScroll()
     if (!this.props.chipsDisabled) {
       this.setState({
-        chipFocus: index
+        chipFocus: index,
       }, () => this.calculatePosition())
     }
   }
@@ -400,7 +398,7 @@ class MaterialChips extends Component {
       }
 
       return {
-        onRequestDelete: this.deleteItem(chip)
+        onRequestDelete: this.deleteItem(chip),
       }
     }
 

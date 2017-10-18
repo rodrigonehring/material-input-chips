@@ -13,6 +13,8 @@ deploy:
   provider: npm
   email: rodrigonehring@hotmail.com
   api_key: $NPM_TOKEN
+  script:
+    - npm run build
   skip_cleanup: true
   on:
     tags: true

@@ -1,0 +1,6 @@
+deploy:
+  provider: npm
+  email: rodrigonehring@hotmail.com
+  api_key: $NPM_TOKEN
+  on:
+    tags: true

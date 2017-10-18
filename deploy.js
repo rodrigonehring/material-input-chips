@@ -1,6 +1,7 @@
 const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const semver = require('semver');
 
 
 const getCurrentTag = () => new Promise((resolve, reject) => {
@@ -34,19 +35,8 @@ const openPackage = () => new Promise((resolve, reject) => {
   });
 });
 
-const savePackage = (content) => new Promise((resolve, reject) => {
-  fs.writeFile('./package.json', JSON.stringify(content, null, 2), (err) => {
-    if (err) {
-      return reject(err);
-    }
-
-    resolve();
-  });
-});
-
-
-const commit = (branch, version) => new Promise((resolve, reject) => {
-  exec(`git add . && git commit -m "Auto updating version" && git tag ${version} -f && git push origin ${branch} && git push --tags -f`, (err, stdout) => {
+const commit = (version) => new Promise((resolve, reject) => {
+  exec(`git tag ${version} && git push --tags`, (err, stdout) => {
     if (err) {
       return reject(err);
     }
@@ -59,19 +49,23 @@ const commit = (branch, version) => new Promise((resolve, reject) => {
 async function deploy() {
   const currentTag = await getCurrentTag();
   const currentBranch = await getCurrentBranch();
-  const packageJson = await openPackage();
+  const { version: packageVersion } = await openPackage();
 
   console.log('current branch: ', currentBranch);
   console.log('current tag version: ', currentTag);
-  console.log('current package.json version: ', packageJson.version);
+  console.log('current package.json version: ', packageVersion);
 
-  if (currentTag !== packageJson.version) {
-    console.log('Different versions, updating package.json');
-    packageJson.version = currentTag;
-    await savePackage(packageJson);
-    await commit(currentBranch, currentTag);
 
-    console.log('Success!');
+  if (semver.gt(packageVersion, currentTag)) {
+    console.log('Package.json have a biggest version than git');
+
+    try {
+      await commit(packageVersion);
+      console.log('Success!');
+    } catch (e) {
+      console.log('Error!', e);
+      process.exit(1);
+    }    
   }
 }
 

@@ -287,7 +287,13 @@ class MaterialChips extends Component {
       this.setState(state => ({
         optionsOpen: state.optionsOpen || this.props.openOnFocus,
         containerFocus: true,
-      }), () => this.calculatePosition())
+      }), () => {
+        if (this.state.chipFocus === null) {
+          return this.input.focus()
+        }
+
+        this.calculatePosition()
+      })
     }
   }
 
@@ -312,6 +318,7 @@ class MaterialChips extends Component {
   }
 
   handleChipFocus = index => () => {
+    console.log('handleChipFocus')
     this.resetScroll()
     if (!this.props.chipsDisabled) {
       this.setState({

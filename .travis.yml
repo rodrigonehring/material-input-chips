@@ -6,6 +6,8 @@ install:
 script:
   - npm t
 cache: yarn
+before_deploy: 
+  - node deploy.js
 deploy:
   provider: npm
   email: rodrigonehring@hotmail.com

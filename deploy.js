@@ -45,8 +45,8 @@ const savePackage = (content) => new Promise((resolve, reject) => {
 });
 
 
-const commit = (version) => new Promise((resolve, reject) => {
-  exec(`git add . && git commit -m "Auto updating version" && git tag ${version} -f && git push && git push --tags -f`, (err, stdout) => {
+const commit = (branch, version) => new Promise((resolve, reject) => {
+  exec(`git add . && git commit -m "Auto updating version" && git tag ${version} -f && git push origin ${branch} && git push --tags -f`, (err, stdout) => {
     if (err) {
       return reject(err);
     }
@@ -69,7 +69,7 @@ async function deploy() {
     console.log('Different versions, updating package.json');
     packageJson.version = currentTag;
     await savePackage(packageJson);
-    await commit(currentTag);
+    await commit(currentBranch, currentTag);
 
     console.log('Success!');
   }

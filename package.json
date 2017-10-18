@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run clean && mkdir dist && npm run build:dist",
     "build:dist": "NODE_ENV=production webpack",
-    "prepublish": "npm run build && node deploy",
+    "prepublish": "npm run build",
     "clean": "rm -rf dist",
     "test": "eslint src",
     "start": "styleguidist server",

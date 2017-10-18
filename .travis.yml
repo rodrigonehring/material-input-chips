@@ -1,9 +1,13 @@
-language: node
+language: node_js
+node_js:
+  - "8"
 install:
   - yarn
 script:
   - npm t
 cache: yarn
+before_deploy: 
+  - node deploy.js
 deploy:
   provider: npm
   email: rodrigonehring@hotmail.com

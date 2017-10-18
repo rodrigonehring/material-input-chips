@@ -1,13 +1,14 @@
 {
   "name": "material-input-chips",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "material-ui based chips autocomplete",
   "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",
   "license": "MIT",
   "scripts": {
     "build": "npm run clean && mkdir dist && npm run build:dist",
-    "build:dist": "babel src/MaterialChips/*.js --out-file dist/material-input-chips.js",
+    "build:dist": "webpack",
+    "build:dist2": "babel src/MaterialChips/*.js --out-file dist/material-input-chips.js",
     "prepublish": "npm run build",
     "clean": "rm -rf dist",
     "styleguide": "styleguidist server",
@@ -16,11 +17,17 @@
   "babel": {
     "presets": [
       "react",
-      ["env", {
-        "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "safari >= 7"
+            ]
+          }
         }
-      }]
+      ]
     ],
     "plugins": [
       "transform-class-properties"
@@ -32,10 +39,11 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "react-styleguidist": "^6.0.31",
     "material-ui": "^1.0.0-beta.17",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-styleguidist": "^6.0.31",
+    "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack": "^3.8.1"
   },
   "peerDependencies": {

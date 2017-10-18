@@ -1,11 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
+var WebpackBundleSizeAnalyzerPlugin = require('webpack-bundle-size-analyzer').WebpackBundleSizeAnalyzerPlugin;
+
+const prod = true;
 
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: './src/MaterialChips/index.js',
+  target: 'node',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'umd',
+
     filename: 'material-ui-chips.js'
   },
   module: {
@@ -19,10 +25,26 @@ module.exports = {
       }
     ]
   },
-  externals : {
-    react: 'commonjs react',
-    'react-dom': 'commonjs react-dom',
-    'material-ui': 'commonjs material-ui',
-  },
-  plugins: []
+  externals: [
+    'material-ui',
+    'material-ui/Chip',
+    'material-ui/styles',
+    'material-ui/Form',
+    'material-ui/Input',
+    'material-ui/Menu',
+    'material-ui/Paper',
+    'classnames',
+    'prop-types',
+    'react',
+    'react-dom',
+  ],
+  plugins: [
+    new WebpackBundleSizeAnalyzerPlugin(path.resolve(__dirname, 'dist/plain-report.txt')),
+    prod && new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    }),
+  ]
 }

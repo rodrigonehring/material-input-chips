@@ -1,0 +1,55 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "extends": [ "plugin:react/recommended" ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "blockBindings": true,
+      "classes": true,
+      "defaultParams": true,
+      "destructuring": true,
+      "jsx": true,
+      "modules": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "restParams": true,
+      "spread": true,
+      "superInFunctions": true,
+      "templateStrings": true
+    }
+  },
+  "rules": {
+    "eqeqeq": 2,
+    "indent": ["error", 2, { "SwitchCase": 1 } ],
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "no-shadow": 2,
+    "comma-dangle": ["error", "always-multiline"],
+    "curly": 2,
+    "keyword-spacing": 2,
+    "no-console": 0,
+    "no-bitwise": 2,
+    "max-params": [ 2, {"max": 7}],
+    "no-redeclare": 2,
+    "default-case": 2,
+    "no-irregular-whitespace": 1,
+    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-closing-bracket-location": 1,
+    "react/prop-types": 0,
+    "react/display-name": 0,
+
+    "prefer-const": ["error", {
+      "destructuring": "any",
+      "ignoreReadBeforeAssign": false
+    }],
+    "semi": ["error", "never"]
+  }
+
+}

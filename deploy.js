@@ -51,17 +51,17 @@ async function deploy() {
   const currentBranch = await getCurrentBranch();
   const { version: packageVersion } = await openPackage();
 
-  console.log('current branch: ', currentBranch);
-  console.log('current tag version: ', currentTag);
-  console.log('current package.json version: ', packageVersion);
+  // console.log('current branch: ', currentBranch);
+  // console.log('current tag version: ', currentTag);
+  // console.log('current package.json version: ', packageVersion);
 
 
   if (semver.gt(packageVersion, currentTag)) {
-    console.log('Package.json have a biggest version than git');
+    // console.log('Package.json have a biggest version than git');
 
     try {
-      await commit(packageVersion);
-      console.log('Success!');
+      // await commit(packageVersion);
+      console.log(packageVersion);
     } catch (e) {
       console.log('Error!', e);
       // process.exit(1);

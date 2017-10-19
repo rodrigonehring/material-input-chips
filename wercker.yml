@@ -41,7 +41,7 @@ deploy-gh-pages:
       name: build styleguidist
       code: npm run styleguide:build
 
-    - gh-pages:
+    - kwyjibo/gh-pages@0.2.4:
       token: $GITHUB_TOKEN
       branch: gh-pages
 

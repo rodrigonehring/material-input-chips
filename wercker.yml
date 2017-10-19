@@ -25,4 +25,6 @@ build:
     - script:
         name: verify tag package.json
         code: |
+          ls
+          git status
           node deploy.js

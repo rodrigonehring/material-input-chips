@@ -20,14 +20,22 @@ build:
     # A step that executes `npm test` command
     - npm-test
 
+    - script:
+      name: get version from rake
+      code: export APP_VERSION=$(node deploy.js)
+
+    - github-create-release:
+      token: $GITHUB_TOKEN
+      tag: $APP_VERSION
+
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
-    - script:
-        name: verify tag package.json
-        code: |
-          echo 'ls'
-          ls
-          echo 'git status'
-          git status
-          val=$(node deploy.js)
-          echo "node returned: $val"
+    # - script:
+    #     name: verify tag package.json
+    #     code: |
+    #       echo 'ls'
+    #       ls
+    #       echo 'git status'
+    #       git status
+    #       val=$(node deploy.js)
+    #       echo "node returned: $val"

@@ -35,6 +35,17 @@ deploy:
       - mariosant/npm-publish@2.0.2:
         token: $NPM_TOKEN
 
+deploy-gh-pages:
+  steps:
+    - script:
+      name: build styleguidist
+      code: npm run styleguide:build
+
+    - gh-pages:
+      token: $GITHUB_TOKEN
+      branch: gh-pages
+
+
 # ghpages:
 #   steps:
 #     - script:

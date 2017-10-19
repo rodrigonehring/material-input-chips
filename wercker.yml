@@ -1,27 +1,10 @@
-# This references the default nodejs container from
-# the Docker Hub: https://registry.hub.docker.com/_/node/
-# If you want Nodesource's container you would reference nodesource/node
-# Read more about containers on our dev center
-# http://devcenter.wercker.com/docs/containers/index.html
 box: node
-# This is the build pipeline. Pipelines are the core of wercker
-# Read more about pipelines on our dev center
-# http://devcenter.wercker.com/docs/pipelines/index.html
-
 
 build:
-  # The steps that will be executed on build
-  # Steps make up the actions in your pipeline
-  # Read more about steps on our dev center:
-  # http://devcenter.wercker.com/docs/steps/index.html
   steps:
     - script:
       name: install yarn
       code: npm install -g yarn
-
-    - script:
-      name: report yarn version
-      code: yarn --version
 
     - script:
       name: set yarn cache
@@ -30,17 +13,18 @@ build:
     - script:
       name: install dependencies
       code: HOME=$YARN_CACHE yarn
-      
-    # A step that executes `npm test` command
+
     - npm-test
 
-    - script:
-      name: get version of package.json
-      code: export APP_VERSION=$(node deploy.js)
+deploy:
+  steps:
+      - script:
+        name: get version of package.json
+        code: export APP_VERSION=$(node deploy.js)
 
-    - github-create-release:
-      token: $GITHUB_TOKEN
-      tag: $APP_VERSION
+      - github-create-release:
+        token: $GITHUB_TOKEN
+        tag: $APP_VERSION
 
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed

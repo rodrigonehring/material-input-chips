@@ -23,7 +23,6 @@ build:
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
     - script:
-        name: echo nodejs information
+        name: verify tag package.json
         code: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
+          node deploy.js

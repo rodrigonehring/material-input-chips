@@ -32,6 +32,14 @@ deploy:
         token: $GITHUB_TOKEN
         tag: $APP_VERSION
 
+      - mariosant/npm-publish@2.0.2:
+        token: $NPM_TOKEN
+
+# ghpages:
+#   steps:
+#     - script:
+#       name: Gene
+
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
     # - script:

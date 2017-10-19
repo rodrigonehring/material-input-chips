@@ -16,6 +16,10 @@ build:
 
     - npm-test
 
+    - script:
+      name: build dist
+      code: npm run build
+
 deploy:
   steps:
       - script:

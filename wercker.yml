@@ -29,5 +29,5 @@ build:
           ls
           echo 'git status'
           git status
-          echo 'node deploy'
-          node deploy.js
+          val=$(node deploy.js)
+          echo "node returned: $val"

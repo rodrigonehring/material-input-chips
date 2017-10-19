@@ -25,6 +25,9 @@ build:
     - script:
         name: verify tag package.json
         code: |
+          echo 'ls'
           ls
+          echo 'git status'
           git status
+          echo 'node deploy'
           node deploy.js

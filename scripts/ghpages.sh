@@ -1,0 +1,1 @@
+fail "missing option \"token\", aborting"

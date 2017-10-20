@@ -1,0 +1,57 @@
+{
+  "name": "material-input-chips",
+  "version": "1.1.14",
+  "description": "material-ui based chips autocomplete",
+  "main": "dist/material-input-chips.js",
+  "author": "Rodrigo Eduardo Nehring",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && mkdir dist && npm run build:dist",
+    "build:dist": "NODE_ENV=production webpack",
+    "clean": "rm -rf dist",
+    "test": "eslint src",
+    "start": "styleguidist server",
+    "styleguide:build": "styleguidist build"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "safari >= 7"
+            ]
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-class-properties"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-react": "^7.4.0",
+    "material-ui": "^1.0.0-beta.17",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-styleguidist": "^6.0.31",
+    "webpack": "^3.8.1",
+    "webpack-bundle-size-analyzer": "^2.7.0"
+  },
+  "peerDependencies": {
+    "material-ui": ">= 1.0.0",
+    "react": "^15.6.1 || ^16.0.0",
+    "react-dom": "^15.6.1 || ^16.0.0"
+  }
+}

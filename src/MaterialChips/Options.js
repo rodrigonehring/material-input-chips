@@ -21,19 +21,41 @@ const styles = theme => ({
   },
 })
 
+function showLabel({ item, matches }) {
+  const match = matches.find(i => i.key === 'label')
+
+  if (match) {
+    // let count = 0
+    const result = match.value
+
+    // match.indices.forEach((indice) => {
+    //   let a = result.substr(0, indice[0])
+    //   let mid = result.substr(0, indece[0])
+    // })
+
+    return result
+  }
+
+  return item.Email
+}
+
 class Options extends Component {
   render() {
     const { classes, open, options, onSelect } = this.props
-    const containerOpen = open && options.length > 0
+    const containerOpen = open
     const containerClasses = cx(classes.optionsContainer, containerOpen && classes.optionsContainerOpen)
 
     return (
       <Paper className={containerClasses} square>
-        {options.map(option => (
-          <MenuItem key={option.label} onClick={() => onSelect(option)}>
-            {option.label}
-          </MenuItem>
-        ))}
+        {options.map((item) => {
+          const option = item.item
+          return (
+            <MenuItem key={option.label + option.Email} onClick={() => onSelect(option)}>
+              {showLabel(item)}
+            </MenuItem>
+          ) 
+        })}
+        {options.length === 0 && 'no results'} 
       </Paper>
     )
   }

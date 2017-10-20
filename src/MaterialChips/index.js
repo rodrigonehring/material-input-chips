@@ -5,6 +5,7 @@ import { FormControl, FormHelperText } from 'material-ui/Form'
 import { withStyles } from 'material-ui/styles'
 import Chip from 'material-ui/Chip'
 import cx from 'classnames'
+import Fuse from 'fuse.js'
 
 // import { makeContact } from 'helpers/helpers'
 const makeContact = contact => contact
@@ -83,12 +84,14 @@ class MaterialChips extends Component {
     optionsOpen: false,
     translateX: 0,
     input: '',
+    options: [],
   }
 
   chipRefs = {}
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside)
+    this.configureFuse()
   }
 
   componentWillUnmount() {
@@ -99,7 +102,45 @@ class MaterialChips extends Component {
     if (!this.props.disabled && nextProps.disabled) {
       this.reset()
     }
+
+    if (this.props.options !== nextProps.options) {
+      this.configureFuse(nextProps.options)
+    }
   }
+  
+  /*
+  * Handle search stuff, with fuse.js
+  */
+  configureFuse = (list = this.props.options) => {
+    this.fuse = new Fuse(list, {
+      shouldSort: true,
+      threshold: 0.4,
+      includeScore: true,
+      maxPatternLength: 32,
+      minMatchCharLength: 3,
+      includeMatches: true,
+      distance: 100,
+      keys: [
+        'label',
+        'Email',
+      ],
+      location: 0,
+    })
+  }
+
+  search = (value) => {
+    const { onSearch } = this.props
+
+    const options = this.fuse.search(value)
+
+    this.setState({ options })
+
+    console.log('options searched', options)
+    
+    if (onSearch) {
+      onSearch(value)
+    }
+  } 
 
   // reset when click outside component
   handleClickOutside = (event) => {
@@ -131,9 +172,7 @@ class MaterialChips extends Component {
         optionsOpen: true,
       })
 
-      if (this.props.onSearch) {
-        this.props.onSearch(target.value)
-      }
+      this.search(target.value)
 
       return this.input.focus()
     }
@@ -332,7 +371,8 @@ class MaterialChips extends Component {
   }
 
   filterOptionsSelected = () => {
-    const { options, selected, fields } = this.props
+    const { selected, fields } = this.props
+    const { options } = this.state
     const selectedValues = selected.map(item => item[fields.value])
 
     return options.filter(option => !selectedValues.includes(option[fields.value]))
@@ -489,7 +529,7 @@ class MaterialChips extends Component {
 
         <Options
           open={optionsOpen}
-          options={this.filterOptionsSelected()}
+          options={this.state.options}
           onSelect={this.selectOption}
         />
         

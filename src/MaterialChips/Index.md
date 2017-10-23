@@ -57,6 +57,7 @@ const selected = [
 ------
 
 ### Fuse search
+Type: field
 
 ```js
 const options = [

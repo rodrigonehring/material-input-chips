@@ -472,7 +472,7 @@ class MaterialChips extends Component {
   render() {
     const { classes, disabled, selected, label, inputDisabled } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
-    const labelShrinked = (selected.length > 0) || (input.length > 0) || containerFocus
+    const labelShrinked = (selected.length > 0) || (input.length > 0)
     const labelFocused = containerFocus || chipFocus || inputFocus
 
     const formClasses = cx(

@@ -1,3 +1,3 @@
-import Handler from '../src/dev/Hoc'
+import Handler from '../src/dev/Handler'
 
 global.Handler = Handler

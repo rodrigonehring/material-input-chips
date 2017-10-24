@@ -40,9 +40,9 @@ const selected = [
 
 ```js
 const selected = [
-  { label: 'big field width some words', Email: 'Email' },
-  { label: 'big field width some words 2', Email: 'Email 2' },
-  { label: 'big field width some words 3', Email: 'Email 3' }
+  { label: 'big field some words', Email: 'Email' },
+  { label: 'big field some words 2', Email: 'Email 2' },
+  { label: 'big field some words 3', Email: 'Email 3' }
 ];
 
 <div style={{ width: 400 }}>
@@ -61,9 +61,9 @@ Type: field
 
 ```js
 const options = [
-  { label: 'big field width some words', Email: 'Email' },
-  { label: 'big field width some words 2', Email: 'Email 2' },
-  { label: 'big field width some words 3', Email: 'Email 3' }
+  { label: 'big field some words', Email: 'Email' },
+  { label: 'big field some words 2', Email: 'Email 2' },
+  { label: 'big field some words 3', Email: 'Email 3' }
 ];
 
 <div style={{ width: 400 }}>

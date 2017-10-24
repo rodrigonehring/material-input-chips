@@ -25,7 +25,7 @@ function addBold(start, end, str) {
   return `${str.slice(0, start)}<b>${str.slice(start, end + 1)}</b>${str.slice(end + 1, str.length)}`
 }
 
-function showLabel({ item, matches }, { label, value }) {
+function showLabel({ item, matches }, { label }) {
   const match = matches.find(i => i.key === label)
 
   if (match) {
@@ -37,7 +37,7 @@ function showLabel({ item, matches }, { label, value }) {
     }, { count: 0, result: match.value }).result
   }
 
-  return item[value]
+  return item[label]
 }
 
 class Options extends Component {

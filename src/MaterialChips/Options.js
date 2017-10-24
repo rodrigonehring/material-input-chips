@@ -21,27 +21,28 @@ const styles = theme => ({
   },
 })
 
-function showLabel({ item, matches }) {
-  const match = matches.find(i => i.key === 'label')
+function addBold(start, end, str) {
+  return `${str.slice(0, start)}<b>${str.slice(start, end + 1)}</b>${str.slice(end + 1, str.length)}`
+}
+
+function showLabel({ item, matches }, { label, value }) {
+  const match = matches.find(i => i.key === label)
 
   if (match) {
-    // let count = 0
-    const result = match.value
+    return match.indices.reduce((acc, curr) => {
+      acc.result = addBold(curr[0] + acc.count, curr[1] + acc.count, acc.result)
+      acc.count += 7
 
-    // match.indices.forEach((indice) => {
-    //   let a = result.substr(0, indice[0])
-    //   let mid = result.substr(0, indece[0])
-    // })
-
-    return result
+      return acc
+    }, { count: 0, result: match.value }).result
   }
 
-  return item.Email
+  return item[value]
 }
 
 class Options extends Component {
   render() {
-    const { classes, open, options, onSelect } = this.props
+    const { classes, open, options, onSelect, fields } = this.props
     const containerOpen = open
     const containerClasses = cx(classes.optionsContainer, containerOpen && classes.optionsContainerOpen)
 
@@ -51,7 +52,9 @@ class Options extends Component {
           const option = item.item
           return (
             <MenuItem key={option.label + option.Email} onClick={() => onSelect(option)}>
-              {showLabel(item)}
+              <span
+                dangerouslySetInnerHTML={{ __html: showLabel(item, fields) }}
+              />
             </MenuItem>
           ) 
         })}

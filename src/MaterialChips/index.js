@@ -119,11 +119,9 @@ class MaterialChips extends Component {
       maxPatternLength: 32,
       minMatchCharLength: 3,
       includeMatches: true,
+      matchAllTokens: true,
       distance: 100,
-      keys: [
-        'label',
-        'Email',
-      ],
+      keys: Object.values(this.props.fields),
       location: 0,
     })
   }
@@ -134,8 +132,6 @@ class MaterialChips extends Component {
     const options = this.fuse.search(value)
 
     this.setState({ options })
-
-    console.log('options searched', options)
     
     if (onSearch) {
       onSearch(value)
@@ -175,6 +171,12 @@ class MaterialChips extends Component {
       this.search(target.value)
 
       return this.input.focus()
+    } else if (target.value.length === 0) {
+      return this.setState({
+        error: null,
+        input: '',
+        optionsOpen: false,
+      })
     }
 
     this.setState({
@@ -470,7 +472,7 @@ class MaterialChips extends Component {
   render() {
     const { classes, disabled, selected, label, inputDisabled } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
-    const labelShrinked = (selected.length > 0) || (input.length > 0) || containerFocus
+    const labelShrinked = (selected.length > 0) || (input.length > 0)
     const labelFocused = containerFocus || chipFocus || inputFocus
 
     const formClasses = cx(
@@ -531,6 +533,7 @@ class MaterialChips extends Component {
           open={optionsOpen}
           options={this.state.options}
           onSelect={this.selectOption}
+          fields={this.props.fields}
         />
         
       </div>

@@ -22,8 +22,14 @@ class MaterialChips extends Component {
     /** disable delete button on chips */
     chipsDisabled: PropTypes.bool,
 
+    /** Classes from material-ui withStyles() */
+    classes: PropTypes.object,
+
     /** clear input text after add an item */
     clearAfterAdd: PropTypes.bool,
+
+    /** Disable input */
+    disabled: PropTypes.bool,
 
     /** Custom fields names */
     fields: PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),

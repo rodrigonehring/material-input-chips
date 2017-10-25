@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Paper from 'material-ui/Paper'
 import { MenuItem } from 'material-ui/Menu'
@@ -7,6 +8,8 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   optionsContainer: {
     display: 'none',
+    maxHeight: 300,
+    overflowY: 'auto',
   },
   optionsContainerOpen: {
     position: 'absolute',
@@ -15,7 +18,6 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 3,
     left: 0,
     top: '100%',
-    marginTop: -8,
     right: 0,
   },
 })
@@ -60,6 +62,14 @@ const Options = ({ classes, open, options, onSelect, fields }) => {
       })}
     </Paper>
   )
+}
+
+Options.propTypes = {
+  classes: PropTypes.object,
+  open: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.Object),
+  onSelect: PropTypes.func,
+  fields: PropTypes.object,
 }
 
 export default withStyles(styles)(Options)

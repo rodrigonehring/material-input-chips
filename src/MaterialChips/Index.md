@@ -63,7 +63,11 @@ Type: field
 const options = [
   { label: 'big field some words', Email: 'Email' },
   { label: 'big field some words 2', Email: 'Email 2' },
-  { label: 'big field some words 3', Email: 'Email 3' }
+  { label: 'big field some words 3', Email: 'Email 3' },
+  { label: 'big field some words 4', Email: 'Email 4' },
+  { label: 'big field some words 5', Email: 'Email 5' },
+  { label: 'big field some words 6', Email: 'Email 6' },
+  { label: 'big field some words 7', Email: 'Email 7' },
 ];
 
 <Handler>

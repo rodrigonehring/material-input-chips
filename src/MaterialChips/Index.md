@@ -66,14 +66,34 @@ const options = [
   { label: 'big field some words 3', Email: 'Email 3' }
 ];
 
-<div style={{ width: 400 }}>
-  <Handler>
-    <MaterialChips
-      options={options}
-      label="Label"
-    />
-  </Handler>
-</div>
+<Handler>
+  <MaterialChips
+    options={options}
+    label="Label"
+  />
+</Handler>
+```
+------
+
+### Validators
+validator should return true to break and show error message
+
+```js
+const validators = [
+  { message: 'Lenght should be bigger than 3', validator: value => value.length < 3 },
+  { message: 'Already exist', validator: (value, selected) => {
+    const items = selected.map(item => item.Email)
+    return items.includes(value)
+  } }
+];
+
+<Handler>
+  <MaterialChips
+    validators={validators}
+    label="Label"
+  />
+</Handler>
+
 ```
 ------
 

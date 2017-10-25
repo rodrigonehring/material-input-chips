@@ -106,6 +106,11 @@ class MaterialChips extends Component {
     if (this.props.options !== nextProps.options) {
       this.configureFuse(nextProps.options)
     }
+
+    if (this.props.selected !== nextProps.selected) {
+      this.configureFuse(this.filterOptionsSelected(nextProps.options, nextProps.selected))
+      this.search()
+    }
   }
   
   /*
@@ -126,7 +131,7 @@ class MaterialChips extends Component {
     })
   }
 
-  search = (value) => {
+  search = (value = this.state.input) => {
     const { onSearch } = this.props
 
     const options = this.fuse.search(value)
@@ -136,7 +141,7 @@ class MaterialChips extends Component {
     if (onSearch) {
       onSearch(value)
     }
-  } 
+  }
 
   // reset when click outside component
   handleClickOutside = (event) => {
@@ -286,6 +291,14 @@ class MaterialChips extends Component {
     this.props.onChange && this.props.onChange(selected)
   }
 
+  selectOption = (option) => {
+    if (this.props.clearAfterAdd) {
+      this.setState({ input: '' })
+    }
+
+    this.onChange([ ...this.props.selected, option ])
+  }
+
   addItem = (value) => {
     const error = validate(value, this.props.validators, this.props.selected)
     const item = this.makeItem(value)
@@ -367,14 +380,8 @@ class MaterialChips extends Component {
     }
   }
 
-  selectOption = (option) => {
-    this.setState({ input: '' })
-    this.onChange([ ...this.props.selected, option ])
-  }
-
-  filterOptionsSelected = () => {
-    const { selected, fields } = this.props
-    const { options } = this.state
+  filterOptionsSelected = (options, selected = this.props.selected) => {
+    const { fields } = this.props
     const selectedValues = selected.map(item => item[fields.value])
 
     return options.filter(option => !selectedValues.includes(option[fields.value]))

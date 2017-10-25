@@ -43,7 +43,7 @@ function showLabel({ item, matches }, { label }) {
 class Options extends Component {
   render() {
     const { classes, open, options, onSelect, fields } = this.props
-    const containerOpen = open
+    const containerOpen = open && options.length > 0
     const containerClasses = cx(classes.optionsContainer, containerOpen && classes.optionsContainerOpen)
 
     return (
@@ -58,7 +58,6 @@ class Options extends Component {
             </MenuItem>
           ) 
         })}
-        {options.length === 0 && 'no results'} 
       </Paper>
     )
   }

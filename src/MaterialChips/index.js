@@ -7,8 +7,6 @@ import Chip from 'material-ui/Chip'
 import cx from 'classnames'
 import Fuse from 'fuse.js'
 
-// import { makeContact } from 'helpers/helpers'
-const makeContact = contact => contact
 import Options from './Options'
 import { TYPES, acceptedKeycodes, validate, defaultValidators } from './helpers'
 import styles from './styles'
@@ -27,6 +25,9 @@ class MaterialChips extends Component {
 
     /** Callback fired when user add or remove one chip, return arrayOf selected items after change  */
     onChange: PropTypes.func,
+
+    /** Should return a new chip, receive fields filled   */
+    makeChip: PropTypes.func,
 
     /** Must receive state from props */
     selected: PropTypes.arrayOf(PropTypes.object),
@@ -73,6 +74,7 @@ class MaterialChips extends Component {
     submitKeyCodes: [ 13, 9, 191 ],
     clearAfterAdd: true,
     fields: { label: 'label', value: 'Email' },
+    makeChip: chip => chip,
     selected: [],
   }
 
@@ -277,11 +279,11 @@ class MaterialChips extends Component {
   }
 
   makeItem = (newValue) => {
-    const { value, label } = this.props.fields
+    const { fields, makeChip } = this.props
     
-    const contact = makeContact({
-      [value]: newValue,
-      [label]: newValue,
+    const contact = makeChip({
+      [fields.value]: newValue,
+      [fields.label]: newValue,
     })
 
     return contact

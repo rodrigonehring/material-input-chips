@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import Input, { InputLabel } from 'material-ui/Input'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import { withStyles } from 'material-ui/styles'
-import Chip from 'material-ui/Chip'
 import cx from 'classnames'
 import Fuse from 'fuse.js'
 
+import Chip from './Chip'
 import Options from './Options'
 import { TYPES, acceptedKeycodes, validate } from './helpers'
 import styles from './styles'
@@ -28,6 +28,8 @@ class MaterialChips extends Component {
     /** clear input text after add an item */
     clearAfterAdd: PropTypes.bool,
 
+    chipComponent: PropTypes.func,
+
     /** Disable input */
     disabled: PropTypes.bool,
 
@@ -38,7 +40,7 @@ class MaterialChips extends Component {
     inputDisabled: PropTypes.bool,
 
     /** Props wich will be passed directly to component */
-    inputProps: PropTypes.object,
+    // inputProps: PropTypes.object,
 
     /** label for input */
     label: PropTypes.string,
@@ -82,6 +84,7 @@ class MaterialChips extends Component {
     clearAfterAdd: true,
     fields: { label: 'label', value: 'Email' },
     makeChip: chip => chip,
+    chipComponent: Chip,
     selected: [],
   }
 
@@ -289,12 +292,10 @@ class MaterialChips extends Component {
   makeItem = (newValue) => {
     const { fields, makeChip } = this.props
 
-    const contact = makeChip({
+    return makeChip({
       [fields.value]: newValue,
       [fields.label]: newValue,
     })
-
-    return contact
   }
 
   selectOption = (option) => {
@@ -308,7 +309,7 @@ class MaterialChips extends Component {
   addItem = (value) => {
     const error = validate(value, this.props.validators, this.props.selected)
     const item = this.makeItem(value)
-    const { selected } = this.props
+    const { selected, clearAfterAdd } = this.props
 
     if (error) {
       return this.setState({ error })
@@ -317,7 +318,7 @@ class MaterialChips extends Component {
     this.setState(
       state => ({
         error,
-        input: this.props.clearAfterAdd ? '' : state.input,
+        input: clearAfterAdd ? '' : state.input,
       }),
       () => {
         this.onChange([...selected, item])
@@ -453,30 +454,28 @@ class MaterialChips extends Component {
     const { classes, fields, chipsDisabled, selected } = this.props
     const { chipFocus } = this.state
 
-    const chipActions = (chip) => {
-      if (chipsDisabled) {
-        return {}
+    return selected.map((chip, index) => {
+      const chipsProps = {
+        chip,
+        label: chip[fields.label],
+        className: cx(classes.chip, index === chipFocus && classes.chipFocus),
       }
 
-      return {
-        onRequestDelete: this.deleteItem(chip),
+      if (!chipsDisabled) {
+        chipsProps.onRequestDelete = this.deleteItem(chip)
       }
-    }
 
-    return selected.map((chip, index) => (
-      <div
-        ref={(ref) => { this.chipRefs[index] = ref }}
-        onFocus={this.handleChipFocus(index)}
-        key={`chip-${chip[fields.value]}`}
-        className={classes.chipWrapper}
-      >
-        <Chip
-          label={chip[fields.label]}
-          className={cx(classes.chip, index === chipFocus && classes.chipFocus)}
-          {...chipActions(chip)}
-        />
-      </div>
-    ))
+      return (
+        <div
+          ref={(ref) => { this.chipRefs[index] = ref }}
+          onFocus={this.handleChipFocus(index)}
+          key={`chip-${chip[fields.value]}`}
+          className={classes.chipWrapper}
+        >
+          {this.props.chipComponent(chipsProps)}
+        </div>
+      )
+    })
   }
 
   render() {

@@ -67,7 +67,7 @@ const Options = ({ classes, open, options, onSelect, fields }) => {
 Options.propTypes = {
   classes: PropTypes.object,
   open: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.Object),
+  options: PropTypes.arrayOf(PropTypes.object),
   onSelect: PropTypes.func,
   fields: PropTypes.object,
 }

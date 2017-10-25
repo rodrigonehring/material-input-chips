@@ -101,6 +101,23 @@ const validators = [
 ```
 ------
 
+### Custom Chip Component
+
+```js
+const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
+const chipComponent = function({ chip }) { return ( <span style={{ border: '1px solid red' }}>{chip.label}</span> )};
+
+<Handler>
+  <MaterialChips
+    selected={selected}
+    chipComponent={chipComponent}
+    label="Label"
+  />
+</Handler>
+
+```
+------
+
 | Condition | Result |
 | ------------- |-------------|
 | Click on container | Enable some focus state |

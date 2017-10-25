@@ -6,6 +6,15 @@ const styles = theme => ({
       outline: 'none',
     },
   },
+  breakLine: {
+    '& > $chips': {
+      position: 'relative',
+      flexWrap: 'wrap',
+    },
+    '& > $chipsWrapper': {
+      border: '1px solid red',
+    },
+  },
   formControl: {
     transition: '.3s ease',
     display: 'flex',

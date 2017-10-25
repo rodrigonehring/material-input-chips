@@ -52,6 +52,9 @@ class MaterialChips extends Component {
     /** clear input text after add an item */
     clearAfterAdd: PropTypes.bool,
 
+    /** Should sroll horizontal infinite or break line  */
+    breakLine: PropTypes.bool,
+
     /** Custom fields names */
     fields: PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
 
@@ -74,6 +77,7 @@ class MaterialChips extends Component {
     clearAfterAdd: true,
     fields: { label: 'label', value: 'Email' },
     selected: [],
+    breakLine: false,
   }
 
   state = {
@@ -477,19 +481,22 @@ class MaterialChips extends Component {
   }
   
   render() {
-    const { classes, disabled, selected, label, inputDisabled } = this.props
+    const { classes, disabled, selected, label, inputDisabled, breakLine } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
     const labelShrinked = (selected.length > 0) || (input.length > 0)
     const labelFocused = containerFocus || chipFocus || inputFocus
 
     const formClasses = cx(
       classes.inkbar,
+      breakLine && classes.breakLine,
       classes.underline,
       containerFocus && classes.focused,
       error && error.length > 0 && classes.error,
       disabled && classes.disabled,
       classes.formControl
     )
+
+    console.log(breakLine, formClasses)
 
     return (
       <div

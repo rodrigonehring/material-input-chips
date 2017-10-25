@@ -36,7 +36,7 @@ const selected = [
 ------
 
 
-### Horizontal translate
+### Without line break, infinite scroll horizontal
 
 ```js
 const selected = [
@@ -48,6 +48,27 @@ const selected = [
 <div style={{ width: 400 }}>
   <Handler>
     <MaterialChips
+      selected={selected}
+      label="Label"
+    />
+  </Handler>
+</div>
+```
+------
+
+### With line break
+
+```js
+const selected = [
+  { label: 'big field some words', Email: 'Email' },
+  { label: 'big field some words 2', Email: 'Email 2' },
+  { label: 'big field some words 3', Email: 'Email 3' }
+];
+
+<div style={{ width: 400 }}>
+  <Handler>
+    <MaterialChips
+      breakLine={true}
       selected={selected}
       label="Label"
     />

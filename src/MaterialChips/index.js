@@ -8,7 +8,7 @@ import cx from 'classnames'
 import Fuse from 'fuse.js'
 
 import Options from './Options'
-import { TYPES, acceptedKeycodes, validate, defaultValidators } from './helpers'
+import { TYPES, acceptedKeycodes, validate } from './helpers'
 import styles from './styles'
 
 /**
@@ -70,7 +70,6 @@ class MaterialChips extends Component {
     inputDisabled: false,
     inputProps: {},
     options: [],
-    validators: defaultValidators,
     submitKeyCodes: [ 13, 9, 191 ],
     clearAfterAdd: true,
     fields: { label: 'label', value: 'Email' },

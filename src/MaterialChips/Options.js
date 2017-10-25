@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import cx from 'classnames'
 import Paper from 'material-ui/Paper'
 import { MenuItem } from 'material-ui/Menu'
@@ -12,7 +12,6 @@ const styles = theme => ({
     position: 'absolute',
     display: 'block',
     zIndex: 90,
-    marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 3,
     left: 0,
     top: '100%',
@@ -40,27 +39,27 @@ function showLabel({ item, matches }, { label }) {
   return item[label]
 }
 
-class Options extends Component {
-  render() {
-    const { classes, open, options, onSelect, fields } = this.props
-    const containerOpen = open && options.length > 0
-    const containerClasses = cx(classes.optionsContainer, containerOpen && classes.optionsContainerOpen)
+const Options = ({ classes, open, options, onSelect, fields }) => {
+  const containerOpen = open && options.length > 0
+  const containerClasses = cx(
+    classes.optionsContainer,
+    containerOpen && classes.optionsContainerOpen
+  )
 
-    return (
-      <Paper className={containerClasses} square>
-        {options.map((item) => {
-          const option = item.item
-          return (
-            <MenuItem key={option.label + option.Email} onClick={() => onSelect(option)}>
-              <span
-                dangerouslySetInnerHTML={{ __html: showLabel(item, fields) }}
-              />
-            </MenuItem>
-          ) 
-        })}
-      </Paper>
-    )
-  }
+  return (
+    <Paper className={containerClasses} square>
+      {options.map((item) => {
+        const option = item.item
+        return (
+          <MenuItem key={option.label + option.Email} onClick={() => onSelect(option)}>
+            <span
+              dangerouslySetInnerHTML={{ __html: showLabel(item, fields) }} // eslint-disable-line
+            />
+          </MenuItem>
+        )
+      })}
+    </Paper>
+  )
 }
 
 export default withStyles(styles)(Options)

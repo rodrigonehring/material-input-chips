@@ -19,7 +19,7 @@ export function validate(value, validators, selected) {
   let error
 
   // with for can break loop
-  for (let i = 0; i < validators.length; i++) {
+  for (let i = 0; i < validators.length; i = +i) {
     const current = validators[i]
     if (current.validator(value, selected)) {
       error = current.message

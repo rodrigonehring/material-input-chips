@@ -18,37 +18,9 @@ import styles from './styles'
  * @author [Rodrigo Nehring](https://github.com/rodrigonehring)
 */
 class MaterialChips extends Component {
-
   static propTypes = {
-    /** Callback fired when user type something in input, return input string */
-    onSearch: PropTypes.func,
-
-    /** Callback fired when user add or remove one chip, return arrayOf selected items after change  */
-    onChange: PropTypes.func,
-
-    /** Should return a new chip, receive fields filled   */
-    makeChip: PropTypes.func,
-
-    /** Must receive state from props */
-    selected: PropTypes.arrayOf(PropTypes.object),
-
-    /** To show in autocomplete  */
-    options: PropTypes.arrayOf(PropTypes.object),
-
-    /** Keycodes to watch when user keydown, to fire internal add method */
-    submitKeyCodes: PropTypes.arrayOf(PropTypes.number),
-
-    /** label for input */
-    label: PropTypes.string,
-
-    /** auto open autocomplete options on focus container */
-    openOnFocus: PropTypes.bool,
-
     /** disable delete button on chips */
     chipsDisabled: PropTypes.bool,
-
-    /** disable input field */
-    inputDisabled: PropTypes.bool,
 
     /** clear input text after add an item */
     clearAfterAdd: PropTypes.bool,
@@ -56,11 +28,41 @@ class MaterialChips extends Component {
     /** Custom fields names */
     fields: PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
 
+    /** disable input field */
+    inputDisabled: PropTypes.bool,
+
     /** Props wich will be passed directly to component */
     inputProps: PropTypes.object,
 
+    /** label for input */
+    label: PropTypes.string,
+
+    /** Should return a new chip, receive fields filled   */
+    makeChip: PropTypes.func,
+
+    /** Callback fired when user add or remove one chip,
+     * return arrayOf selected items after change  */
+    onChange: PropTypes.func,
+
+    /** Callback fired when user type something in input, return input string */
+    onSearch: PropTypes.func,
+
+    /** auto open autocomplete options on focus container */
+    openOnFocus: PropTypes.bool,
+
+    /** To show in autocomplete  */
+    options: PropTypes.arrayOf(PropTypes.object),
+
+    /** Must receive state from props */
+    selected: PropTypes.arrayOf(PropTypes.object),
+
+    /** Keycodes to watch when user keydown, to fire internal add method */
+    submitKeyCodes: PropTypes.arrayOf(PropTypes.number),
+
     /** Array of validators, will be executed to verify if input can be a chip */
-    validators: PropTypes.arrayOf(PropTypes.shape({ message: PropTypes.string, validator: PropTypes.func })),
+    validators: PropTypes.arrayOf(PropTypes.shape({
+      message: PropTypes.string, validator: PropTypes.func,
+    })),
   }
 
   static defaultProps = {
@@ -70,7 +72,7 @@ class MaterialChips extends Component {
     inputDisabled: false,
     inputProps: {},
     options: [],
-    submitKeyCodes: [ 13, 9, 191 ],
+    submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
     fields: { label: 'label', value: 'Email' },
     makeChip: chip => chip,
@@ -80,7 +82,6 @@ class MaterialChips extends Component {
   state = {
     containerFocus: false,
     inputFocus: false,
-    optionsFocus: false,
     chipFocus: null,
     optionsOpen: false,
     translateX: 0,
@@ -88,15 +89,9 @@ class MaterialChips extends Component {
     options: [],
   }
 
-  chipRefs = {}
-
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside)
     this.configureFuse()
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,7 +108,19 @@ class MaterialChips extends Component {
       this.search()
     }
   }
-  
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  }
+
+  onChange = (selected) => {
+    if (this.props.onChange) {
+      this.props.onChange(selected)
+    }
+  }
+
+  chipRefs = {}
+
   /*
   * Handle search stuff, with fuse.js
   */
@@ -134,11 +141,10 @@ class MaterialChips extends Component {
 
   search = (value = this.state.input) => {
     const { onSearch } = this.props
-
     const options = this.fuse.search(value)
 
     this.setState({ options })
-    
+
     if (onSearch) {
       onSearch(value)
     }
@@ -158,7 +164,6 @@ class MaterialChips extends Component {
         error: false,
         containerFocus: false,
         inputFocus: false,
-        optionsFocus: false,
         chipFocus: null,
         optionsOpen: false,
       })
@@ -166,7 +171,6 @@ class MaterialChips extends Component {
   }
 
   handleInputChange = ({ target }) => {
-
     if (target.value.length > 3) {
       this.setState({
         error: null,
@@ -209,16 +213,14 @@ class MaterialChips extends Component {
 
     // se input está selecionado e não está vazio
     if (inputFocus && inputValue.length > 0) {
-
       // verifica se é alguma tecla de submissão
       if (this.props.submitKeyCodes.includes(e.keyCode)) {
         this.addItem(inputValue)
         e.preventDefault()
       }
-    
+
     // se input está selecionado e está vazio
     } else if (inputFocus && inputValue.length === 0) {
-
       // ser for um TAB, limpa algumas coisas
       if (TYPES.TAB.includes(e.keyCode)) {
         return this.setState({
@@ -240,7 +242,6 @@ class MaterialChips extends Component {
 
     // se está com focus em um chip
     } else if (!inputFocus && chipFocus !== null) {
-
       // movimentar focus ao apartar left right
       if (TYPES.RIGHT.includes(e.keyCode)) {
         e.preventDefault()
@@ -274,12 +275,14 @@ class MaterialChips extends Component {
   focusChip = (index) => {
     const ref = this.chipRefs[index]
     const selector = ref.querySelector(':scope [role="button"]')
-    selector && selector.focus()
+    if (selector) {
+      selector.focus()
+    }
   }
 
   makeItem = (newValue) => {
     const { fields, makeChip } = this.props
-    
+
     const contact = makeChip({
       [fields.value]: newValue,
       [fields.label]: newValue,
@@ -288,16 +291,12 @@ class MaterialChips extends Component {
     return contact
   }
 
-  onChange = (selected) => {
-    this.props.onChange && this.props.onChange(selected)
-  }
-
   selectOption = (option) => {
     if (this.props.clearAfterAdd) {
       this.setState({ input: '' })
     }
 
-    this.onChange([ ...this.props.selected, option ])
+    this.onChange([...this.props.selected, option])
   }
 
   addItem = (value) => {
@@ -315,7 +314,7 @@ class MaterialChips extends Component {
         input: this.props.clearAfterAdd ? '' : state.input,
       }),
       () => {
-        this.onChange([ ...selected, item ])
+        this.onChange([...selected, item])
         setTimeout(() => this.alignInput(), 100)
       }
     )
@@ -325,7 +324,7 @@ class MaterialChips extends Component {
     const { selected, fields } = this.props
 
     this.setState(
-      {chipFocus: null },
+      { chipFocus: null },
       () => {
         this.onChange(selected.filter(item => item[fields.value] !== chip[fields.value]))
         this.calculatePosition()
@@ -406,15 +405,16 @@ class MaterialChips extends Component {
 
   chipPos = (containerWidth, chipWidth, chipOffset, translateX) => {
     if (chipOffset + chipWidth > containerWidth + translateX) {
-      return - (chipOffset - (containerWidth - chipWidth))
+      return -(chipOffset - (containerWidth - chipWidth))
     }
 
     return null
   }
 
   alignInput = () => {
+    const { offsetLeft, clientWidth } = this.inputContainer
     const containerWidth = this.containerRef.clientWidth
-    const translateX = - (this.inputContainer.offsetLeft - (containerWidth - this.inputContainer.clientWidth))
+    const translateX = -(offsetLeft - (containerWidth - clientWidth))
     this.setState({ translateX })
   }
 
@@ -431,7 +431,6 @@ class MaterialChips extends Component {
     }
 
     if (chipFocus !== null) {
-
       if (chipFocus === 0) {
         return this.setState({ translateX: 0 })
       }
@@ -458,25 +457,22 @@ class MaterialChips extends Component {
       }
     }
 
-    return selected.map((chip, index) => {
-      return (
-        <div
-          ref={(ref) => { this.chipRefs[index] = ref }}
-          onFocus={this.handleChipFocus(index)}
-          key={`chip-${chip[fields.value]}-${index}`}
-          className={classes.chipWrapper}
-        >
-          <Chip
-            label={chip[fields.label]}
-            className={cx(classes.chip, index === chipFocus && classes.chipFocus)}
-            {...chipActions(chip)}
-          />
-        </div>
-      )
-      
-    })
+    return selected.map((chip, index) => (
+      <div
+        ref={(ref) => { this.chipRefs[index] = ref }}
+        onFocus={this.handleChipFocus(index)}
+        key={`chip-${chip[fields.value]}`}
+        className={classes.chipWrapper}
+      >
+        <Chip
+          label={chip[fields.label]}
+          className={cx(classes.chip, index === chipFocus && classes.chipFocus)}
+          {...chipActions(chip)}
+        />
+      </div>
+    ))
   }
-  
+
   render() {
     const { classes, disabled, selected, label, inputDisabled } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
@@ -501,7 +497,7 @@ class MaterialChips extends Component {
         onKeyDown={this.watchKeyCodes}
         tabIndex={-1}
       >
-        
+
         <FormControl className={formClasses} error={error && error.length > 0} fullWidth margin="dense">
 
           <InputLabel shrink={labelShrinked} margin="dense" focused={labelFocused}>
@@ -512,7 +508,7 @@ class MaterialChips extends Component {
             <div className={classes.chips} ref={this.registerRef('chips')} style={{ transform: `translateX(${this.state.translateX}px)` }}>
 
               {this.renderChips()}
-              
+
               <div ref={this.registerRef('inputContainer')} className={classes.inputContainer}>
                 <Input
                   className={classes.input}
@@ -526,10 +522,10 @@ class MaterialChips extends Component {
                   value={input}
                 />
               </div>
-              
+
             </div>
           </div>
-          
+
           { error &&
             <FormHelperText className={classes.errorText}>
               {error}
@@ -543,7 +539,7 @@ class MaterialChips extends Component {
           onSelect={this.selectOption}
           fields={this.props.fields}
         />
-        
+
       </div>
     )
   }

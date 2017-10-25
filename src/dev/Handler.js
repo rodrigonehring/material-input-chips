@@ -8,9 +8,10 @@ export default class Handler extends React.Component {
   render() {
     return (
       <div>
-        {React.cloneElement(this.props.children, { onChange: this.onChange, selected: this.state.selected })}
+        {React.cloneElement(this.props.children, {
+          onChange: this.onChange, selected: this.state.selected,
+        })}
       </div>
     )
   }
 }
-

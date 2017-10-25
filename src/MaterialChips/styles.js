@@ -33,7 +33,7 @@ const styles = theme => ({
     '&$chip > svg': {
       color: theme.palette.primary[500],
     },
-  }, 
+  },
   chip: {
     display: 'inline-flex',
     height: 20,

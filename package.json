@@ -1,10 +1,15 @@
 {
   "name": "material-input-chips",
-  "version": "1.1.6",
-  "description": "material-ui based chips autocomplete",
+  "version": "1.1.15",
+  "description": "A chip input field using Material-UI@next.",
+  "homepage": "https://rodrigonehring.github.io/material-input-chips/styleguide/",
   "main": "dist/material-input-chips.js",
   "author": "Rodrigo Eduardo Nehring",
   "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rodrigonehring/material-input-chips.git"
+    },
   "scripts": {
     "build": "npm run clean && mkdir dist && npm run build:dist",
     "build:dist": "NODE_ENV=production webpack",
@@ -14,6 +19,13 @@
     "start": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
+  "keywords": [
+    "react",
+    "material",
+    "chip",
+    "input",
+    "tags"
+  ],
   "babel": {
     "presets": [
       "react",

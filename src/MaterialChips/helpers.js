@@ -1,6 +1,3 @@
-// import validateEmail from 'helpers/checkEmail'
-const validateEmail = () => true
-
 export const TYPES = {
   ESCAPE: [27],
   LEFT: [37],
@@ -15,6 +12,10 @@ export function acceptedKeycodes(code) {
 }
 
 export function validate(value, validators, selected) {
+  if (!validators || validators.length === 0) {
+    return false
+  }
+
   let error
 
   // with for can break loop
@@ -28,13 +29,3 @@ export function validate(value, validators, selected) {
 
   return error
 }
-
-// por ordem de prioridade
-export const defaultValidators = [
-  // { message: 'Precisa ter length maior que 3', validator: (value) => value && value.length < 2 },
-  { message: 'Verifique o(s) e-mail(s) informado(s)', validator: value => !validateEmail(value) },
-  { message: 'Já existe este email na lista', validator: (value, selected) => {
-    const items = selected.map(item => item.Email)
-    return items.includes(value)
-  } },
-]

@@ -1,6 +1,6 @@
 {
   "name": "material-input-chips",
-  "version": "1.1.15",
+  "version": "1.2.1",
   "description": "A chip input field using Material-UI@next.",
   "homepage": "https://rodrigonehring.github.io/material-input-chips/styleguide/",
   "main": "dist/material-input-chips.js",

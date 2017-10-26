@@ -78,7 +78,7 @@ class MaterialChips extends Component {
     openOnFocus: false,
     chipsDisabled: false,
     inputDisabled: false,
-    inputProps: {},
+    // inputProps: {},
     options: [],
     submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
@@ -169,7 +169,6 @@ class MaterialChips extends Component {
   reset = () => {
     setTimeout(() => {
       this.setState({
-        input: '',
         error: false,
         containerFocus: false,
         inputFocus: false,
@@ -177,6 +176,15 @@ class MaterialChips extends Component {
         optionsOpen: false,
       })
     })
+  }
+
+  handlePaste = (e) => {
+    const value = e.clipboardData.getData('Text')
+    const error = validate(value, this.props.validators, this.props.selected)
+    if (!error) {
+      e.preventDefault()
+      this.addItem(value)
+    }
   }
 
   handleInputChange = ({ target }) => {
@@ -501,6 +509,7 @@ class MaterialChips extends Component {
         onBlur={this.handleContainerBlur}
         onKeyDown={this.watchKeyCodes}
         tabIndex={-1}
+        onPaste={this.handlePaste}
       >
 
         <FormControl className={formClasses} error={error && error.length > 0} fullWidth margin="dense">
@@ -525,6 +534,7 @@ class MaterialChips extends Component {
                   margin="dense"
                   inputRef={this.registerRef('input')}
                   value={input}
+                  inputProps={{ spellCheck: false }}
                 />
               </div>
 

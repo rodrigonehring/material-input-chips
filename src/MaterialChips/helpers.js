@@ -16,16 +16,11 @@ export function validate(value, validators, selected) {
     return false
   }
 
-  let error
-
-  // with for can break loop
-  for (let i = 0; i < validators.length; i = +i) {
-    const current = validators[i]
-    if (current.validator(value, selected)) {
-      error = current.message
-      break
+  return validators.reduce((acc, curr) => {
+    if (!acc && curr.validator(value, selected)) {
+      return curr.message
     }
-  }
 
-  return error
+    return acc
+  }, false)
 }

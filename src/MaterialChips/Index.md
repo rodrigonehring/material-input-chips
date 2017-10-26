@@ -118,6 +118,26 @@ const chipComponent = function({ chip }) { return ( <span style={{ border: '1px 
 ```
 ------
 
+### Auto add with CTRL + V
+
+```js
+const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
+const validators = [
+  { message: 'Lenght should be bigger than 3', validator: value => value.length <= 3 },
+  { message: 'should include @', validator: value => !value.includes('@') }
+];
+
+<Handler>
+  <MaterialChips
+    label="Label"
+    selected={selected}
+    validators={validators}
+  />
+</Handler>
+
+```
+------
+
 | Condition | Result |
 | ------------- |-------------|
 | Click on container | Enable some focus state |

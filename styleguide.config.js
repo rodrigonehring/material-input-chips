@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   webpackConfig: {
+    devtool: 'source-maps',
     module: {
       rules: [
         {

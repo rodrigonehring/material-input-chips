@@ -7,8 +7,8 @@ export const TYPES = {
   DELETE_CODES: [46, 8],
 }
 
-export function acceptedKeycodes(code) {
-  return code > 47 && code < 91
+export function acceptedCharCodes(code) {
+  return code > 64 && code < 123
 }
 
 export function validate(value, validators, selected) {

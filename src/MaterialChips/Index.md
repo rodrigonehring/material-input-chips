@@ -118,7 +118,7 @@ const chipComponent = function({ chip }) { return ( <span style={{ border: '1px 
 ```
 ------
 
-### Auto add with CTRL + V
+### Copy and paste
 
 ```js
 const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
@@ -127,13 +127,22 @@ const validators = [
   { message: 'should include @', validator: value => !value.includes('@') }
 ];
 
-<Handler>
-  <MaterialChips
-    label="Label"
-    selected={selected}
-    validators={validators}
-  />
-</Handler>
+<div>
+  <Handler>
+    <MaterialChips
+      label="Field 1"
+      selected={selected}
+      validators={validators}
+    />
+  </Handler>
+
+  <Handler>
+    <MaterialChips
+      label="Field 2"
+      validators={validators}
+    />
+  </Handler>
+</div>
 
 ```
 ------

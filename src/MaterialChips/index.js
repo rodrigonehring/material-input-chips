@@ -8,7 +8,8 @@ import Fuse from 'fuse.js'
 
 import Chip from './Chip'
 import Options from './Options'
-import { TYPES, acceptedKeycodes, validate } from './helpers'
+import { TYPES, acceptedCharCodes, validate } from './helpers'
+import copy from './copy'
 import styles from './styles'
 
 /**
@@ -128,98 +129,18 @@ class MaterialChips extends Component {
     }
   }
 
-  chipRefs = {}
-
-  /*
-  * Handle search stuff, with fuse.js
-  */
-  configureFuse = (list = this.props.options) => {
-    this.fuse = new Fuse(list, {
-      shouldSort: true,
-      threshold: 0.4,
-      includeScore: true,
-      maxPatternLength: 32,
-      minMatchCharLength: 3,
-      includeMatches: true,
-      matchAllTokens: true,
-      distance: 100,
-      keys: Object.values(this.props.fields),
-      location: 0,
-    })
-  }
-
-  search = (value = this.state.input) => {
-    const { onSearch } = this.props
-    const options = this.fuse.search(value)
-
-    this.setState({ options })
-
-    if (onSearch) {
-      onSearch(value)
-    }
-  }
-
-  // reset when click outside component
-  handleClickOutside = (event) => {
-    if (this.containerRef && !this.containerRef.contains(event.target)) {
-      this.reset()
-    }
-  }
-
-  reset = () => {
-    setTimeout(() => {
-      this.setState({
-        error: false,
-        containerFocus: false,
-        inputFocus: false,
-        chipFocus: null,
-        optionsOpen: false,
-      })
-    })
-  }
-
-  handlePaste = (e) => {
-    const value = e.clipboardData.getData('Text')
-    const error = validate(value, this.props.validators, this.props.selected)
-    if (!error) {
-      e.preventDefault()
-      this.addItem(value)
-    }
-  }
-
-  handleInputChange = ({ target }) => {
-    if (target.value.length > 3) {
-      this.setState({
-        error: null,
-        input: target.value,
-        optionsOpen: true,
-      })
-
-      this.search(target.value)
-
-      return this.input.focus()
-    } else if (target.value.length === 0) {
-      return this.setState({
-        error: null,
-        input: '',
-        optionsOpen: false,
-      })
-    }
-
-    this.setState({
-      error: null,
-      input: target.value,
-    })
-  }
-
-  watchKeyCodes = (e) => {
-    const { inputFocus, input: inputValue, chipFocus, optionsOpen } = this.state
-    const { selected } = this.props
+  handleKeyPress = (e) => {
+    const { inputFocus } = this.state
 
     // se não está selecionado, e digitou alguma tecla "NORMAL", seleciona o input
-    if (!inputFocus && acceptedKeycodes(e.keyCode)) {
+    if (!inputFocus && acceptedCharCodes(e.charCode)) {
       this.input.focus()
     }
+  }
+
+  handleKeyDown = (e) => {
+    const { inputFocus, input: inputValue, chipFocus, optionsOpen } = this.state
+    const { selected } = this.props
 
     // se options está aberto e aberta 'ESC', fechar
     if (optionsOpen && TYPES.ESCAPE.includes(e.keyCode)) {
@@ -288,6 +209,125 @@ class MaterialChips extends Component {
       }
     }
   }
+
+  /*
+  * Handle search stuff, with fuse.js
+  */
+  configureFuse = (list = this.props.options) => {
+    this.fuse = new Fuse(list, {
+      shouldSort: true,
+      threshold: 0.4,
+      includeScore: true,
+      maxPatternLength: 32,
+      minMatchCharLength: 3,
+      includeMatches: true,
+      matchAllTokens: true,
+      distance: 100,
+      keys: Object.values(this.props.fields),
+      location: 0,
+    })
+  }
+
+  search = (value = this.state.input) => {
+    const { onSearch } = this.props
+    const options = this.fuse.search(value)
+
+    this.setState({ options })
+
+    if (onSearch) {
+      onSearch(value)
+    }
+  }
+
+  // reset when click outside component
+  handleClickOutside = (event) => {
+    if (this.containerRef && !this.containerRef.contains(event.target)) {
+      this.reset()
+    }
+  }
+
+  reset = () => {
+    setTimeout(() => {
+      this.setState({
+        error: false,
+        containerFocus: false,
+        inputFocus: false,
+        chipFocus: null,
+        optionsOpen: false,
+      })
+    })
+  }
+
+  handleCopy = (e) => {
+    const { selected } = this.props
+    const { chipFocus } = this.state
+
+    if (chipFocus !== null) {
+      e.preventDefault()
+      const currentChip = selected[chipFocus]
+      copy(JSON.stringify(currentChip))
+      this.input.focus()
+      this.focusChip(chipFocus)
+    }
+  }
+
+  handlePaste = (e) => {
+    const { selected, fields } = this.props
+    const clipboard = e.clipboardData.getData('Text')
+
+    try {
+      const item = JSON.parse(clipboard)
+
+      if (!item[fields.value]) {
+        throw new Error(`Don't contain ${fields.value}`)
+      }
+
+      const exist = selected.find(i => i[fields.value] === item[fields.value])
+
+      if (exist) {
+        e.preventDefault()
+        this.setState(state => ({ input: state.input + item[fields.value] }))
+        return
+      }
+
+      this.props.onChange([...this.props.selected, item])
+      e.preventDefault()
+    } catch (error) {
+      const valid = !validate(clipboard, this.props.validators, this.props.selected)
+
+      if (valid) {
+        e.preventDefault()
+        this.addItem(clipboard)
+      }
+    }
+  }
+
+  handleInputChange = ({ target }) => {
+    if (target.value.length > 3) {
+      this.setState({
+        error: null,
+        input: target.value,
+        optionsOpen: true,
+      })
+
+      this.search(target.value)
+
+      return this.input.focus()
+    } else if (target.value.length === 0) {
+      return this.setState({
+        error: null,
+        input: '',
+        optionsOpen: false,
+      })
+    }
+
+    this.setState({
+      error: null,
+      input: target.value,
+    })
+  }
+
+  chipRefs = {}
 
   focusChip = (index) => {
     const ref = this.chipRefs[index]
@@ -467,6 +507,11 @@ class MaterialChips extends Component {
         chip,
         label: chip[fields.label],
         className: cx(classes.chip, index === chipFocus && classes.chipFocus),
+        onClick: () => {
+          // input need focus before to "onCopy" work
+          this.input.focus()
+          this.focusChip(index)
+        },
       }
 
       if (!chipsDisabled) {
@@ -507,9 +552,11 @@ class MaterialChips extends Component {
         ref={this.registerRef('containerRef')}
         onFocus={this.handleContainerFocus}
         onBlur={this.handleContainerBlur}
-        onKeyDown={this.watchKeyCodes}
+        onKeyDown={this.handleKeyDown}
+        onKeyPress={this.handleKeyPress}
         tabIndex={-1}
         onPaste={this.handlePaste}
+        onCopy={this.handleCopy}
       >
 
         <FormControl className={formClasses} error={error && error.length > 0} fullWidth margin="dense">

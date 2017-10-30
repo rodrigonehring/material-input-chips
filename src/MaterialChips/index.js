@@ -272,8 +272,12 @@ class MaterialChips extends Component {
   }
 
   handlePaste = (e) => {
-    const { selected, fields } = this.props
+    const { selected, fields, disabled } = this.props
     const clipboard = e.clipboardData.getData('Text')
+
+    if (disabled || !this.state.containerFocus) {
+      return
+    }
 
     try {
       const item = JSON.parse(clipboard)
@@ -290,8 +294,8 @@ class MaterialChips extends Component {
         return
       }
 
-      this.props.onChange([...this.props.selected, item])
       e.preventDefault()
+      this.addItemObject(item, true)
     } catch (error) {
       const valid = !validate(clipboard, this.props.validators, this.props.selected)
 
@@ -346,12 +350,18 @@ class MaterialChips extends Component {
     })
   }
 
-  selectOption = (option) => {
-    if (this.props.clearAfterAdd) {
+  addItemObject = (option, focus) => {
+    const { selected, clearAfterAdd } = this.props
+
+    if (clearAfterAdd) {
       this.setState({ input: '' })
     }
 
-    this.onChange([...this.props.selected, option])
+    this.onChange([...selected, option])
+
+    if (focus) {
+      this.input.focus()
+    }
   }
 
   addItem = (value) => {
@@ -598,7 +608,7 @@ class MaterialChips extends Component {
         <Options
           open={optionsOpen}
           options={this.state.options}
-          onSelect={this.selectOption}
+          onSelect={this.addItemObject}
           fields={this.props.fields}
         />
 

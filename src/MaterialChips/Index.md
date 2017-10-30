@@ -142,6 +142,15 @@ const validators = [
       validators={validators}
     />
   </Handler>
+
+  <Handler>
+    <MaterialChips
+      disabled
+      selected={[{ Email: 'email@disabled.com', label: 'disabled' }]}
+      label="Field 2"
+      validators={validators}
+    />
+  </Handler>
 </div>
 
 ```

@@ -5,11 +5,11 @@ import { FormControl, FormHelperText } from 'material-ui/Form'
 import { withStyles } from 'material-ui/styles'
 import cx from 'classnames'
 import Fuse from 'fuse.js'
+import copy from 'copy-to-clipboard'
 
 import Chip from './Chip'
 import Options from './Options'
 import { TYPES, acceptedCharCodes, validate } from './helpers'
-import copy from './copy'
 import styles from './styles'
 
 /**

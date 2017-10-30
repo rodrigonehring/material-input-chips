@@ -1541,6 +1541,12 @@ copy-concurrently@^1.0.0:
     rimraf "^2.5.4"
     run-queue "^1.0.0"
 
+copy-to-clipboard@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.0.8.tgz#f4e82f4a8830dce4666b7eb8ded0c9bcc313aba9"
+  dependencies:
+    toggle-selection "^1.0.3"
+
 copy-webpack-plugin@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-4.1.1.tgz#53ae69e04955ebfa9fda411f54cbb968531d71fd"
@@ -5950,6 +5956,10 @@ to-fast-properties@^1.0.3:
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
+
+toggle-selection@^1.0.3:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
 
 toposort@^1.0.0:
   version "1.0.6"

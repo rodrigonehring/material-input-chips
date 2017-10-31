@@ -395,10 +395,6 @@ class MaterialChips extends Component {
         this.calculatePosition()
       }
     )
-
-    if (selected.length === 1) {
-      this.reset()
-    }
   }
 
   handleContainerFocus = () => {

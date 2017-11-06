@@ -11,10 +11,19 @@ npm i --save material-input-chips
 ## Usage
 
 ```jsx
+import React from 'react'
 import InputChips from 'material-input-chips'
 
-<InputChips
-  selected={this.state.selected}
-  onChange={(selected) => seState({ selected })}
-/>
+class MyComponent extends React.Component {
+  state = { selected: [] }
+
+  render() {
+    return (
+      <InputChips
+        selected={this.state.selected}
+        onChange={(selected) => this.seState({ selected })}
+      />
+    )
+  }
+}
 ```

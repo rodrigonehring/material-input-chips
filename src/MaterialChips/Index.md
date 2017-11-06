@@ -73,6 +73,7 @@ const options = [
 <Handler>
   <MaterialChips
     options={options}
+    openOnFocus
     label="Label"
   />
 </Handler>

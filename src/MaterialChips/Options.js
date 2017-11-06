@@ -41,7 +41,7 @@ function showLabel({ item, matches }, { label }) {
   return item[label]
 }
 
-const Options = ({ classes, open, options, onSelect, fields }) => {
+const Options = ({ classes, open, options, onSelect, fields, focus }) => {
   const containerOpen = open && options.length > 0
   const containerClasses = cx(
     classes.optionsContainer,
@@ -50,10 +50,14 @@ const Options = ({ classes, open, options, onSelect, fields }) => {
 
   return (
     <Paper className={containerClasses} square>
-      {options.map((item) => {
+      {options.map((item, index) => {
         const option = item.item
         return (
-          <MenuItem key={option.label + option.Email} onClick={() => onSelect(option)}>
+          <MenuItem
+            key={option.label + option.Email}
+            onClick={() => onSelect(option)}
+            selected={focus === index}
+          >
             <span
               dangerouslySetInnerHTML={{ __html: showLabel(item, fields) }} // eslint-disable-line
             />
@@ -70,6 +74,7 @@ Options.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   onSelect: PropTypes.func,
   fields: PropTypes.object,
+  focus: PropTypes.number,
 }
 
 export default withStyles(styles)(Options)

@@ -97,6 +97,7 @@ class MaterialChips extends Component {
     translateX: 0,
     input: '',
     options: [],
+    optionsFocus: 0,
   }
 
   componentDidMount() {
@@ -109,11 +110,7 @@ class MaterialChips extends Component {
       this.reset()
     }
 
-    if (this.props.options !== nextProps.options) {
-      this.configureFuse(nextProps.options)
-    }
-
-    if (this.props.selected !== nextProps.selected) {
+    if (this.props.selected !== nextProps.selected || this.props.options !== nextProps.options) {
       this.configureFuse(this.filterOptionsSelected(nextProps.options, nextProps.selected))
       this.search()
     }
@@ -132,9 +129,43 @@ class MaterialChips extends Component {
   handleKeyPress = (e) => {
     const { inputFocus } = this.state
 
-    // se não está selecionado, e digitou alguma tecla "NORMAL", seleciona o input
+    // not selected, typed "normal" key, then select input
     if (!inputFocus && acceptedCharCodes(e.charCode)) {
       this.input.focus()
+    }
+  }
+
+  haveOptionsKeys = e => []
+    .concat(TYPES.UP).concat(TYPES.DOWN).concat(this.props.submitKeyCodes)
+    .includes(e.keyCode)
+
+  handleOptionsKeys = (e) => {
+    e.preventDefault()
+    const { optionsFocus, options } = this.state
+    let nextPosition
+
+    if (TYPES.UP.includes(e.keyCode)) {
+      if (optionsFocus > 0) {
+        nextPosition = optionsFocus - 1
+      } else {
+        nextPosition = null
+      }
+    } else if (TYPES.DOWN.concat(TYPES.TAB).includes(e.keyCode)) {
+      if (optionsFocus === null) {
+        nextPosition = 0
+      } else if (optionsFocus !== options.length - 1) {
+        nextPosition = optionsFocus + 1
+      } else {
+        nextPosition = null
+      }
+    } else if (this.props.submitKeyCodes.includes(e.keyCode) && typeof optionsFocus === 'number') {
+      this.addItemObject(options[optionsFocus].item, true)
+      return true
+    }
+
+    if (typeof nextPosition === 'number' || nextPosition === null) {
+      this.setState({ optionsFocus: nextPosition })
+      return true
     }
   }
 
@@ -142,43 +173,50 @@ class MaterialChips extends Component {
     const { inputFocus, input: inputValue, chipFocus, optionsOpen } = this.state
     const { selected } = this.props
 
-    // se options está aberto e aberta 'ESC', fechar
-    if (optionsOpen && TYPES.ESCAPE.includes(e.keyCode)) {
-      return this.setState({
-        optionsOpen: false,
-      })
-    }
-
-    // se input está selecionado e não está vazio
-    if (inputFocus && inputValue.length > 0) {
-      // verifica se é alguma tecla de submissão
-      if (this.props.submitKeyCodes.includes(e.keyCode)) {
-        this.addItem(inputValue)
-        e.preventDefault()
-      }
-
-    // se input está selecionado e está vazio
-    } else if (inputFocus && inputValue.length === 0) {
-      // ser for um TAB, limpa algumas coisas
-      if (TYPES.TAB.includes(e.keyCode)) {
+    if (optionsOpen) {
+      // key press ESC, close options
+      if (TYPES.ESCAPE.includes(e.keyCode)) {
         return this.setState({
-          chipFocus: null,
-          inputFocus: false,
-          containerFocus: false,
+          optionsOpen: false,
         })
       }
 
-      // se for um BACKSPACE, deleta última item da lista
-      if (TYPES.BACKSPACE.includes(e.keyCode) && selected.length > 0) {
-        return this.deleteItem(selected[selected.length - 1])()
+      if (this.haveOptionsKeys(e)) {
+        const shouldStop = this.handleOptionsKeys(e)
+        if (shouldStop) {
+          return
+        }
       }
+    }
 
-      if (TYPES.LEFT.includes(e.keyCode)) {
-        e.preventDefault()
-        this.focusChip(selected.length - 1)
+    if (inputFocus) {
+      // input not empty
+      if (inputValue.length > 0) {
+        // verify keycode submission type
+        if (this.props.submitKeyCodes.includes(e.keyCode)) {
+          this.addItem(inputValue)
+          e.preventDefault()
+        }
+      } else {
+        // ser for um TAB, limpa algumas coisas
+        if (TYPES.TAB.includes(e.keyCode)) {
+          return this.setState({
+            chipFocus: null,
+            inputFocus: false,
+            containerFocus: false,
+          })
+        }
+
+        // se for um BACKSPACE, deleta última item da lista
+        if (TYPES.BACKSPACE.includes(e.keyCode) && selected.length > 0) {
+          return this.deleteItem(selected[selected.length - 1])()
+        }
+
+        if (TYPES.LEFT.includes(e.keyCode)) {
+          e.preventDefault()
+          this.focusChip(selected.length - 1)
+        }
       }
-
-    // se está com focus em um chip
     } else if (!inputFocus && chipFocus !== null) {
       // movimentar focus ao apartar left right
       if (TYPES.RIGHT.includes(e.keyCode)) {
@@ -354,10 +392,8 @@ class MaterialChips extends Component {
     const { selected, clearAfterAdd } = this.props
 
     if (clearAfterAdd) {
-      this.setState({ input: '' })
+      this.setState({ input: '' }, () => this.onChange([...selected, option]))
     }
-
-    this.onChange([...selected, option])
 
     if (focus) {
       this.input.focus()
@@ -604,6 +640,7 @@ class MaterialChips extends Component {
         <Options
           open={optionsOpen}
           options={this.state.options}
+          focus={this.state.optionsFocus}
           onSelect={this.addItemObject}
           fields={this.props.fields}
         />

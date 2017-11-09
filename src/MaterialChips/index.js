@@ -278,7 +278,7 @@ class MaterialChips extends Component {
     const { onSearch } = this.props
     const options = this.fuse.search(value)
 
-    this.setState({ options })
+    this.setState({ options, optionsOpen: options.length > 0 })
 
     if (onSearch) {
       onSearch(value)
@@ -357,7 +357,6 @@ class MaterialChips extends Component {
       this.setState({
         error: null,
         input: target.value,
-        optionsOpen: true,
       })
 
       this.search(target.value)
@@ -442,6 +441,8 @@ class MaterialChips extends Component {
   }
 
   handleContainerFocus = () => {
+    console.log(this.state, this.props)
+    debugger
     if (!this.props.disabled) {
       this.setState(state => ({
         optionsOpen: state.optionsOpen || this.props.openOnFocus,

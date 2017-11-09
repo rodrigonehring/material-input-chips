@@ -441,8 +441,6 @@ class MaterialChips extends Component {
   }
 
   handleContainerFocus = () => {
-    console.log(this.state, this.props)
-    debugger
     if (!this.props.disabled) {
       this.setState(state => ({
         optionsOpen: state.optionsOpen || this.props.openOnFocus,

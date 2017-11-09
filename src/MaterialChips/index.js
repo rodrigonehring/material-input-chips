@@ -9,7 +9,7 @@ import copy from 'copy-to-clipboard'
 
 import Chip from './Chip'
 import Options from './Options'
-import { TYPES, acceptedCharCodes, validate } from './helpers'
+import { TYPES, acceptedCharCodes, validate, mimicFuseSearch } from './helpers'
 import styles from './styles'
 
 /**
@@ -36,6 +36,9 @@ class MaterialChips extends Component {
 
     /** Custom fields names */
     fields: PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
+
+    /** To mimic a select field */
+    fixedOptions: PropTypes.bool,
 
     /** disable input field */
     inputDisabled: PropTypes.bool,
@@ -112,7 +115,6 @@ class MaterialChips extends Component {
 
     if (this.props.selected !== nextProps.selected || this.props.options !== nextProps.options) {
       this.configureFuse(this.filterOptionsSelected(nextProps.options, nextProps.selected))
-      this.search()
     }
   }
 
@@ -252,6 +254,12 @@ class MaterialChips extends Component {
   * Handle search stuff, with fuse.js
   */
   configureFuse = (list = this.props.options) => {
+    if (this.props.fixedOptions) {
+      return this.setState({
+        options: mimicFuseSearch(list),
+      })
+    }
+
     this.fuse = new Fuse(list, {
       shouldSort: true,
       threshold: 0.4,

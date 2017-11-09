@@ -26,3 +26,11 @@ export function validate(value, validators, selected) {
     return acc
   }, false)
 }
+
+
+export function mimicFuseSearch(options) {
+  return options.map(option => ({
+    matches: [],
+    item: option,
+  }))
+}

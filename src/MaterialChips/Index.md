@@ -55,6 +55,26 @@ const selected = [
 </div>
 ```
 ------
+------
+
+### AutoOpen fixed options
+
+```js
+const options = [
+  { label: 'email option 1', Email: 'email@domain.com' },
+  { label: 'email option 2', Email: 'email2@domain.com' },
+];
+
+<Handler>
+  <MaterialChips
+    options={options}
+    openOnFocus
+    fixedOptions
+    label="Label"
+  />
+</Handler>
+```
+------
 
 ### Fuse search
 Type: field

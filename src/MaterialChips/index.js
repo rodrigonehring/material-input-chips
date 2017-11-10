@@ -100,7 +100,7 @@ class MaterialChips extends Component {
     translateX: 0,
     input: '',
     options: [],
-    optionsFocus: 0,
+    optionsFocus: null,
   }
 
   componentDidMount() {
@@ -180,6 +180,7 @@ class MaterialChips extends Component {
       if (TYPES.ESCAPE.includes(e.keyCode)) {
         return this.setState({
           optionsOpen: false,
+          optionsFocus: null,
         })
       }
 
@@ -401,7 +402,13 @@ class MaterialChips extends Component {
     const { selected, clearAfterAdd } = this.props
 
     if (clearAfterAdd) {
-      this.setState({ input: '' }, () => this.onChange([...selected, option]))
+      this.setState(
+        {
+          input: '',
+          optionsFocus: null,
+        },
+        () => this.onChange([...selected, option])
+      )
     }
 
     if (focus) {

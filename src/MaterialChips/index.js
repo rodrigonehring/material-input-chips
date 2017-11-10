@@ -15,7 +15,7 @@ import styles from './styles'
 /**
  * material-ui based, chips autocomplete
  *
- * @version 1.0.0
+ * @version 1.3.8
  * @author [Rodrigo Nehring](https://github.com/rodrigonehring)
 */
 class MaterialChips extends Component {
@@ -272,6 +272,8 @@ class MaterialChips extends Component {
       keys: Object.values(this.props.fields),
       location: 0,
     })
+
+    this.search()
   }
 
   search = (value = this.state.input) => {

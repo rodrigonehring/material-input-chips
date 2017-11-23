@@ -8,7 +8,7 @@ import Fuse from 'fuse.js'
 import copy from 'copy-to-clipboard'
 
 import Chip from './Chip'
-import Options from './Options'
+import createOptions from './Options'
 import { TYPES, acceptedCharCodes, validate, mimicFuseSearch } from './helpers'
 import styles from './styles'
 
@@ -29,6 +29,7 @@ class MaterialChips extends Component {
     /** clear input text after add an item */
     clearAfterAdd: PropTypes.bool,
 
+    /** react component to render a chip */
     chipComponent: PropTypes.func,
 
     /** Disable input */
@@ -65,6 +66,9 @@ class MaterialChips extends Component {
     /** To show in autocomplete  */
     options: PropTypes.arrayOf(PropTypes.object),
 
+    /** fn(theme) => ({ optionsContainer, optionsContainerOpen }) to override options styles */
+    optionsClasses: PropTypes.func,
+
     /** Must receive state from props */
     selected: PropTypes.arrayOf(PropTypes.object),
 
@@ -82,7 +86,6 @@ class MaterialChips extends Component {
     openOnFocus: false,
     chipsDisabled: false,
     inputDisabled: false,
-    // inputProps: {},
     options: [],
     submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
@@ -102,6 +105,8 @@ class MaterialChips extends Component {
     options: [],
     optionsFocus: null,
   }
+
+  OptionsComponent = createOptions(this.props.optionsClasses)
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside)
@@ -653,12 +658,13 @@ class MaterialChips extends Component {
           }
         </FormControl>
 
-        <Options
+        <this.OptionsComponent
           open={optionsOpen}
           options={this.state.options}
           focus={this.state.optionsFocus}
           onSelect={this.addItemObject}
           fields={this.props.fields}
+          optionsClasses={this.props.optionsClasses}
         />
 
       </div>

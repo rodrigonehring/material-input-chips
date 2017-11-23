@@ -122,16 +122,46 @@ const validators = [
 ```
 ------
 
-### Custom Chip Component
+### Custom Chip Component and Options custom classes
+
+#### Options classes:
+* optionsContainer
+* menuItemRoot
+* menuItemSelected
+* optionsContainerOpen
 
 ```js
 const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
+const options = [
+  { label: 'big field some words', Email: 'Email' },
+  { label: 'big field some words 2', Email: 'Email 2' },
+  { label: 'big field some words 3', Email: 'Email 3' },
+  { label: 'big field some words 4', Email: 'Email 4' },
+  { label: 'big field some words 5', Email: 'Email 5' },
+  { label: 'big field some words 6', Email: 'Email 6' },
+  { label: 'big field some words 7', Email: 'Email 7' },
+];
+const customOptionsClasses = function() {
+  return {
+    optionsContainer: {
+      border: '3px solid red !important',
+    },
+    menuItemRoot: {
+      color: 'green',
+    },
+    menuItemSelected: {
+      border: '3px solid blue !important',
+    }
+  };
+}
 const chipComponent = function({ chip }) { return ( <span style={{ border: '1px solid red' }}>{chip.label}</span> )};
 
 <Handler>
   <MaterialChips
     selected={selected}
+    options={options}
     chipComponent={chipComponent}
+    optionsClasses={customOptionsClasses}
     label="Label"
   />
 </Handler>

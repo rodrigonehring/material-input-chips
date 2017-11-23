@@ -4,6 +4,7 @@ import cx from 'classnames'
 import Paper from 'material-ui/Paper'
 import { MenuItem } from 'material-ui/Menu'
 import { withStyles } from 'material-ui/styles'
+import deepmerge from 'deepmerge'
 
 const styles = theme => ({
   optionsContainer: {
@@ -56,6 +57,10 @@ const Options = ({ classes, open, options, onSelect, fields, focus }) => {
           <MenuItem
             key={option.label + option.Email}
             onClick={() => onSelect(option)}
+            classes={{
+              root: classes.menuItemRoot,
+              selected: classes.menuItemSelected,
+            }}
             selected={focus === index}
           >
             <span
@@ -77,4 +82,10 @@ Options.propTypes = {
   focus: PropTypes.number,
 }
 
-export default withStyles(styles)(Options)
+export default (customStyles) => {
+  if (customStyles) {
+    return withStyles(theme => deepmerge(styles(theme), customStyles(theme)))(Options)
+  }
+
+  return withStyles(styles)(Options)
+}

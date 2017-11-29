@@ -9,13 +9,14 @@ import copy from 'copy-to-clipboard'
 
 import Chip from './Chip'
 import createOptions from './Options'
-import { TYPES, acceptedCharCodes, validate, mimicFuseSearch } from './helpers'
+import { TYPES, acceptedCharCodes, validate, mimicFuseSearch, keysWatcher } from './helpers'
 import styles from './styles'
+
 
 /**
  * material-ui based, chips autocomplete
  *
- * @version 1.3.8
+ * @version 1.4.1
  * @author [Rodrigo Nehring](https://github.com/rodrigonehring)
 */
 class MaterialChips extends Component {
@@ -106,8 +107,6 @@ class MaterialChips extends Component {
     optionsFocus: null,
   }
 
-  OptionsComponent = createOptions(this.props.optionsClasses)
-
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside)
     this.configureFuse()
@@ -132,6 +131,8 @@ class MaterialChips extends Component {
       this.props.onChange(selected)
     }
   }
+
+  OptionsComponent = createOptions(this.props.optionsClasses)
 
   handleKeyPress = (e) => {
     const { inputFocus } = this.state
@@ -615,11 +616,10 @@ class MaterialChips extends Component {
         ref={this.registerRef('containerRef')}
         onFocus={this.handleContainerFocus}
         onBlur={this.handleContainerBlur}
-        onKeyDown={this.handleKeyDown}
         onKeyPress={this.handleKeyPress}
         tabIndex={-1}
         onPaste={this.handlePaste}
-        onCopy={this.handleCopy}
+        {...keysWatcher(this.handleKeyDown, this.handleCopy)}
       >
 
         <FormControl className={formClasses} error={error && error.length > 0} fullWidth margin="dense">

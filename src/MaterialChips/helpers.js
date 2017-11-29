@@ -2,6 +2,8 @@ export const TYPES = {
   ESCAPE: [27],
   LEFT: [37],
   RIGHT: [39],
+  CTRL: [17],
+  C: [67],
   UP: [38],
   DOWN: [40],
   BACKSPACE: [8],
@@ -33,4 +35,27 @@ export function mimicFuseSearch(options) {
     matches: [],
     item: option,
   }))
+}
+
+export function keysWatcher(handleKeyDown, handleCopy) {
+  let ctrlPressed = false
+
+  return {
+    onKeyDown(e) {
+      if (TYPES.CTRL.includes(e.keyCode)) {
+        ctrlPressed = true
+      }
+
+      if (ctrlPressed && TYPES.C.includes(e.keyCode)) {
+        handleCopy(e)
+      }
+
+      handleKeyDown(e)
+    },
+    onKeyUp(e) {
+      if (TYPES.CTRL.includes(e.keyCode)) {
+        ctrlPressed = false
+      }
+    },
+  }
 }

@@ -17,7 +17,7 @@ function ChipComponent(props) {
 ChipComponent.propTypes = {
   label: PropTypes.string,
   className: PropTypes.string,
-  onRequestDelete: PropTypes.func,
+  onDelete: PropTypes.func,
   chip: PropTypes.object,
 }
 

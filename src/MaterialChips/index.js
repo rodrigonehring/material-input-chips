@@ -579,7 +579,7 @@ class MaterialChips extends Component {
       }
 
       if (!chipsDisabled) {
-        chipsProps.onRequestDelete = this.deleteItem(chip)
+        chipsProps.onDelete = this.deleteItem(chip)
       }
 
       return (

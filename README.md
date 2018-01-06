@@ -5,7 +5,7 @@ This project provides a chip input field for material-ui@next. It is inspired by
 
 ## Installation
 ```shell
-npm i --save material-input-chips
+npm i --save material-input-chips-custom
 ```
 
 ## Usage

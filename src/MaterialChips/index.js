@@ -90,7 +90,7 @@ class MaterialChips extends Component {
     options: [],
     submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
-    fields: { label: 'label', value: 'Email' },
+    fields: { label: 'label', value: 'value' },
     makeChip: chip => chip,
     chipComponent: Chip,
     selected: [],

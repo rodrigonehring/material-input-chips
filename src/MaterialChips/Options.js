@@ -55,7 +55,7 @@ const Options = ({ classes, open, options, onSelect, fields, focus }) => {
         const option = item.item
         return (
           <MenuItem
-            key={option.label + option.Email}
+            key={option.label + option.value}
             onClick={() => onSelect(option)}
             classes={{
               root: classes.menuItemRoot,

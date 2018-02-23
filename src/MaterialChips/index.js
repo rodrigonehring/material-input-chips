@@ -46,7 +46,7 @@ class MaterialChips extends Component {
     inputDisabled: PropTypes.bool,
 
     /** Props wich will be passed directly to component */
-    // inputProps: PropTypes.object,
+    inputProps: PropTypes.object,
 
     /** label for input */
     label: PropTypes.string,
@@ -91,6 +91,7 @@ class MaterialChips extends Component {
     submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
     fields: { label: 'label', value: 'value' },
+    inputProps: {},
     makeChip: chip => chip,
     chipComponent: Chip,
     selected: [],
@@ -596,9 +597,9 @@ class MaterialChips extends Component {
   }
 
   render() {
-    const { classes, disabled, selected, label, inputDisabled } = this.props
+    const { classes, disabled, selected, label, inputDisabled, inputProps } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
-    const labelShrinked = (selected.length > 0) || (input.length > 0)
+    const labelShrinked = !!inputProps.placeholder || (selected.length > 0) || (input.length > 0)
     const labelFocused = containerFocus || chipFocus || inputFocus
 
     const formClasses = cx(
@@ -644,7 +645,7 @@ class MaterialChips extends Component {
                   margin="dense"
                   inputRef={this.registerRef('input')}
                   value={input}
-                  inputProps={{ spellCheck: false }}
+                  inputProps={Object.assign({}, { spellCheck: false }, inputProps)}
                 />
               </div>
 

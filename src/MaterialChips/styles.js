@@ -1,3 +1,5 @@
+const bottomLineColor = 'rgba(0, 0, 0, 0.42)'
+
 const styles = theme => ({
   container: {
     position: 'relative',
@@ -96,7 +98,7 @@ const styles = theme => ({
   focused: {},
   underline: {
     '&:before': {
-      backgroundColor: theme.palette.input.bottomLine,
+      backgroundColor: bottomLineColor,
       left: 0,
       bottom: 0,
       // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
@@ -119,8 +121,7 @@ const styles = theme => ({
     },
     '&$disabled:before': {
       background: 'transparent',
-      backgroundImage: `linear-gradient(to right, ${theme.palette.input
-        .bottomLine} 33%, transparent 0%)`,
+      backgroundImage: `linear-gradient(to right, ${bottomLineColor} 33%, transparent 0%)`,
       backgroundPosition: 'left top',
       backgroundRepeat: 'repeat-x',
       backgroundSize: '5px 1px',

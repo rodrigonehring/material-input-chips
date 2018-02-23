@@ -10,18 +10,32 @@
     label="Label"
   />
 </Handler>
-
-
 ```
+
+------
+
+### Placeholder
+```js
+const inputProps = { placeholder: 'some placeholder' };
+
+<Handler>
+  <MaterialChips
+    label="Label"
+    inputProps={inputProps}
+  />
+</Handler>
+```
+
+
 ------
 
 ### Some selected items
 
 ```js
 const selected = [
-  { label: 'Field 1', Email: 'Email' },
-  { label: 'Field 2', Email: 'Email 2' },
-  { label: 'Field 3', Email: 'Email 3' }
+  { label: 'Field 1', value: 'Email' },
+  { label: 'Field 2', values: 'Email 2' },
+  { label: 'Field 3', value: 'Email 3' }
 ];
 
 <Handler>
@@ -40,9 +54,9 @@ const selected = [
 
 ```js
 const selected = [
-  { label: 'big field some words', Email: 'Email' },
-  { label: 'big field some words 2', Email: 'Email 2' },
-  { label: 'big field some words 3', Email: 'Email 3' }
+  { label: 'big field some words', value: 'Email' },
+  { label: 'big field some words 2', value: 'Email 2' },
+  { label: 'big field some words 3', value: 'Email 3' }
 ];
 
 <div style={{ width: 400 }}>
@@ -61,8 +75,8 @@ const selected = [
 
 ```js
 const options = [
-  { label: 'email option 1', Email: 'email@domain.com' },
-  { label: 'email option 2', Email: 'email2@domain.com' },
+  { label: 'email option 1', value: 'email@domain.com' },
+  { label: 'email option 2', value: 'email2@domain.com' },
 ];
 
 <Handler>
@@ -81,13 +95,13 @@ Type: field
 
 ```js
 const options = [
-  { label: 'big field some words', Email: 'Email' },
-  { label: 'big field some words 2', Email: 'Email 2' },
-  { label: 'big field some words 3', Email: 'Email 3' },
-  { label: 'big field some words 4', Email: 'Email 4' },
-  { label: 'big field some words 5', Email: 'Email 5' },
-  { label: 'big field some words 6', Email: 'Email 6' },
-  { label: 'big field some words 7', Email: 'Email 7' },
+  { label: 'big field some words', value: 'Email' },
+  { label: 'big field some words 2', value: 'Email 2' },
+  { label: 'big field some words 3', value: 'Email 3' },
+  { label: 'big field some words 4', value: 'Email 4' },
+  { label: 'big field some words 5', value: 'Email 5' },
+  { label: 'big field some words 6', value: 'Email 6' },
+  { label: 'big field some words 7', value: 'Email 7' },
 ];
 
 <Handler>
@@ -107,7 +121,7 @@ validator should return true to break and show error message
 const validators = [
   { message: 'Lenght should be bigger than 3', validator: value => value.length < 3 },
   { message: 'Already exist', validator: (value, selected) => {
-    const items = selected.map(item => item.Email)
+    const items = selected.map(item => item.value)
     return items.includes(value)
   } }
 ];
@@ -131,15 +145,15 @@ const validators = [
 * optionsContainerOpen
 
 ```js
-const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
+const selected = [{ label: 'CUSTOM CHIP COMPONENT', value: 'value' }];
 const options = [
-  { label: 'big field some words', Email: 'Email' },
-  { label: 'big field some words 2', Email: 'Email 2' },
-  { label: 'big field some words 3', Email: 'Email 3' },
-  { label: 'big field some words 4', Email: 'Email 4' },
-  { label: 'big field some words 5', Email: 'Email 5' },
-  { label: 'big field some words 6', Email: 'Email 6' },
-  { label: 'big field some words 7', Email: 'Email 7' },
+  { label: 'big field some words', value: 'Email' },
+  { label: 'big field some words 2', value: 'Email 2' },
+  { label: 'big field some words 3', value: 'Email 3' },
+  { label: 'big field some words 4', value: 'Email 4' },
+  { label: 'big field some words 5', value: 'Email 5' },
+  { label: 'big field some words 6', value: 'Email 6' },
+  { label: 'big field some words 7', value: 'Email 7' },
 ];
 const customOptionsClasses = function() {
   return {
@@ -172,7 +186,7 @@ const chipComponent = function({ chip }) { return ( <span style={{ border: '1px 
 ### Copy and paste
 
 ```js
-const selected = [{ label: 'CUSTOM CHIP COMPONENT', Email: 'value' }];
+const selected = [{ label: 'CUSTOM CHIP COMPONENT', value: 'value' }];
 const validators = [
   { message: 'Lenght should be bigger than 3', validator: value => value.length <= 3 },
   { message: 'should include @', validator: value => !value.includes('@') }
@@ -197,7 +211,7 @@ const validators = [
   <Handler>
     <MaterialChips
       disabled
-      selected={[{ Email: 'email@disabled.com', label: 'disabled' }]}
+      selected={[{ value: 'email@disabled.com', label: 'disabled' }]}
       label="Field 2"
       validators={validators}
     />

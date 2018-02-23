@@ -14,9 +14,9 @@ import styles from './styles'
 
 
 /**
- * material-ui based, chips autocomplete
+ * material-ui@next based, chips autocomplete
  *
- * @version 1.4.1
+ * @version 1.4.2
  * @author [Rodrigo Nehring](https://github.com/rodrigonehring)
 */
 class MaterialChips extends Component {

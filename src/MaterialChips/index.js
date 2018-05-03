@@ -45,8 +45,11 @@ class MaterialChips extends Component {
     /** disable input field */
     inputDisabled: PropTypes.bool,
 
-    /** Props wich will be passed directly to component */
-    inputProps: PropTypes.object,
+    /** Props wich will be passed directly to Input component */
+    InputProps: PropTypes.object,
+
+    /** Props which will be passed directly to InputLabel component */
+    InputLabelProps: PropTypes.object,
 
     /** label for input */
     label: PropTypes.string,
@@ -91,7 +94,8 @@ class MaterialChips extends Component {
     submitKeyCodes: [13, 9, 191],
     clearAfterAdd: true,
     fields: { label: 'label', value: 'value' },
-    inputProps: {},
+    InputProps: {},
+    InputLabelProps: {},
     makeChip: chip => chip,
     chipComponent: Chip,
     selected: [],
@@ -597,9 +601,13 @@ class MaterialChips extends Component {
   }
 
   render() {
-    const { classes, disabled, selected, label, inputDisabled, inputProps } = this.props
+    const {
+      classes, disabled, selected, label,
+      inputDisabled, InputProps, InputLabelProps,
+    } = this.props
     const { input, error, containerFocus, chipFocus, optionsOpen, inputFocus } = this.state
-    const labelShrinked = !!inputProps.placeholder || (selected.length > 0) || (input.length > 0)
+
+    const labelShrinked = !!InputProps.placeholder || (selected.length > 0) || (input.length > 0)
     const labelFocused = containerFocus || chipFocus || inputFocus
 
     const formClasses = cx(
@@ -610,6 +618,8 @@ class MaterialChips extends Component {
       disabled && classes.disabled,
       classes.formControl
     )
+
+    const mergedInputLabelProps = Object.assign({}, { shrink: labelShrinked }, InputLabelProps)
 
     return (
       <div
@@ -625,7 +635,7 @@ class MaterialChips extends Component {
 
         <FormControl className={formClasses} error={error && error.length > 0} fullWidth margin="dense">
 
-          <InputLabel shrink={labelShrinked} margin="dense" focused={labelFocused}>
+          <InputLabel margin="dense" focused={labelFocused} {...mergedInputLabelProps}>
             {label}
           </InputLabel>
 
@@ -645,14 +655,14 @@ class MaterialChips extends Component {
                   margin="dense"
                   inputRef={this.registerRef('input')}
                   value={input}
-                  inputProps={Object.assign({}, { spellCheck: false }, inputProps)}
+                  inputProps={Object.assign({}, { spellCheck: false }, InputProps)}
                 />
               </div>
 
             </div>
           </div>
 
-          { error &&
+          {error &&
             <FormHelperText className={classes.errorText}>
               {error}
             </FormHelperText>

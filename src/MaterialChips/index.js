@@ -45,7 +45,7 @@ class MaterialChips extends Component {
     /** disable input field */
     inputDisabled: PropTypes.bool,
 
-    /** Props wich will be passed directly to Input component */
+    /** Props which will be passed directly to Input component */
     InputProps: PropTypes.object,
 
     /** Props which will be passed directly to InputLabel component */
